@@ -1,7 +1,7 @@
 package main
 
 test_deny_host_process {
-	p1 := {
+	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {
@@ -24,5 +24,5 @@ test_deny_host_process {
 	deny_host_process == {
 		"pod myapp-pod in Pod/myapp-pod uses hostProcess",
 		"container myapp-with-hostProcess in Pod/myapp-pod uses hostProcess",
-	} with input as p1
+	} with input as pod
 }

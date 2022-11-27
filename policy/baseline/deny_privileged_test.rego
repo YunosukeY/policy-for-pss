@@ -1,7 +1,7 @@
 package main
 
 test_deny_privileged {
-	p1 := {
+	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"containers": [
@@ -18,5 +18,5 @@ test_deny_privileged {
 			},
 		]},
 	}
-	deny_privileged == {"container privileged-myapp in Pod/myapp-pod is privileged"} with input as p1
+	deny_privileged == {"container privileged-myapp in Pod/myapp-pod is privileged"} with input as pod
 }
