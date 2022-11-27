@@ -1,0 +1,15 @@
+name: Conftest
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  conftest:
+    runs-on: ubuntu-latest
+    container: openpolicyagent/conftest:latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: conftest verify -o github
