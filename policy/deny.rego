@@ -27,6 +27,11 @@ deny[msg] {
 
 deny[msg] {
 	some msg
+	baseline.deny_host_path[msg]
+}
+
+deny[msg] {
+	some msg
 	baseline.deny_unmasked_proc_mount[msg]
 }
 
