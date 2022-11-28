@@ -1,0 +1,12 @@
+name: coverage
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  comment-coverage:
+    runs-on: ubuntu-latest
+    container: openpolicyagent/opa:latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: opa test . -c
