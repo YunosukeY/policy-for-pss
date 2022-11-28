@@ -1,4 +1,4 @@
-name: coverage-budge
+name: coverage-badge
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
     branches:
       - master
 jobs:
-  coverage-budge:
+  coverage-badge:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,7 +17,7 @@ jobs:
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 0c2e618c502912eff6e83e26b24e5c82
-          filename: opa-coverage-budge.json
+          filename: opa-coverage-badge.json
           label: Coverage
           message: ${{ env.COVERAGE }}
           valColorRange: ${{ env.COVERAGE }}
