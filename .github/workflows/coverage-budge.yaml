@@ -20,5 +20,6 @@ jobs:
           filename: opa-coverage-budge.json
           label: Coverage
           message: ${{ env.COVERAGE }}
+          valColorRange: ${{ env.COVERAGE }}
           minColorRange: 50
           maxColorRange: 90
