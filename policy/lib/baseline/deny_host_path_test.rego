@@ -13,15 +13,19 @@ test_deny_host_path {
 		}]},
 	}
 	deny_host_path == {"volume test-volume pod myapp-pod in Pod/myapp-pod uses hostPath"} with input as pod
+}
 
-	pod2 := {
+test_deny_host_path {
+	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"volumes": []},
 	}
-	count(deny_host_path) == 0 with input as pod2
+	count(deny_host_path) == 0 with input as pod
+}
 
-	pod3 := {
+test_deny_host_path {
+	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"volumes": [{
@@ -29,5 +33,5 @@ test_deny_host_path {
 			"emptyDir": {},
 		}]},
 	}
-	count(deny_host_path) == 0 with input as pod3
+	count(deny_host_path) == 0 with input as pod
 }

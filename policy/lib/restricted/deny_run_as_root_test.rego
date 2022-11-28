@@ -29,18 +29,22 @@ test_deny_run_as_root {
 		"container myapp in Pod/myapp-pod runs as root",
 		"container root-myapp in Pod/myapp-pod runs as root",
 	} with input as pod
+}
 
-	non_root_pod := {
+test_deny_run_as_root {
+	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"securityContext": {"runAsNonRoot": true}},
 	}
-	count(deny_run_as_root) == 0 with input as non_root_pod
+	count(deny_run_as_root) == 0 with input as pod
+}
 
-	root_pod := {
+test_deny_run_as_root {
+	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"securityContext": {"runAsNonRoot": false}},
 	}
-	deny_run_as_root == {"pod myapp-pod in Pod/myapp-pod runs as root"} with input as root_pod
+	deny_run_as_root == {"pod myapp-pod in Pod/myapp-pod runs as root"} with input as pod
 }
