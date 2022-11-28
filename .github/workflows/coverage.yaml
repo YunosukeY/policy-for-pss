@@ -18,9 +18,9 @@ jobs:
               details
             </summary>
 
-            ```json
+            \`\`\`json
             $(cat result.json)
-            ```
+            \`\`\`
 
             </div>
           </details>
