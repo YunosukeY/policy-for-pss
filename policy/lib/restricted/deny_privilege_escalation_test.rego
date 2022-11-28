@@ -1,6 +1,6 @@
-package main
+package lib.restricted
 
-test_deny_unmasked_proc_mount {
+test_deny_privilege_escalation {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -11,18 +11,21 @@ test_deny_unmasked_proc_mount {
 				"command": ["sh", "-c", "echo The app is running! && sleep 3600"],
 			},
 			{
-				"name": "default-myapp",
+				"name": "allowed-myapp",
 				"image": "busybox:1.28",
 				"command": ["sh", "-c", "echo The app is running! && sleep 3600"],
-				"securityContext": {"procMount": "Default"},
+				"securityContext": {"allowPrivilegeEscalation": true},
 			},
 			{
-				"name": "unmasked-myapp",
+				"name": "disallowed-myapp",
 				"image": "busybox:1.28",
 				"command": ["sh", "-c", "echo The app is running! && sleep 3600"],
-				"securityContext": {"procMount": "Unmasked"},
+				"securityContext": {"allowPrivilegeEscalation": false},
 			},
 		]},
 	}
-	deny_unmasked_proc_mount == {"container unmasked-myapp in Pod/myapp-pod doesn't mask /proc mount"} with input as pod
+	deny_privilege_escalation == {
+		"container myapp in Pod/myapp-pod allows privilege escalation",
+		"container allowed-myapp in Pod/myapp-pod allows privilege escalation",
+	} with input as pod
 }

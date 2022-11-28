@@ -1,4 +1,4 @@
-package main
+package lib.restricted
 
 test_deny_run_as_root {
 	pod := {

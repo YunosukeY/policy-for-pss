@@ -1,4 +1,4 @@
-package main
+package lib.restricted
 
 import data.lib.k8s
 

@@ -1,4 +1,4 @@
-package main
+package lib.baseline
 
 test_deny_too_many_capabilities {
 	pod := {
