@@ -9,4 +9,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: open-policy-agent/setup-opa@v2
-      - run: opa test . -c
+      - run: opa test policy -c
