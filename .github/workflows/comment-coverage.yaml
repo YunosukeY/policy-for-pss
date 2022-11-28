@@ -1,4 +1,4 @@
-name: coverage
+name: comment-coverage
 on:
   pull_request:
     branches:
