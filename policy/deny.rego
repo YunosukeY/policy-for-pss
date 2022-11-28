@@ -41,3 +41,8 @@ deny[msg] {
 	some msg
 	restricted.deny_run_as_root[msg]
 }
+
+deny[msg] {
+	some msg
+	restricted.deny_disallowed_capabilities[msg]
+}
