@@ -1,0 +1,24 @@
+name: coverage-budge
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  coverage-budge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: open-policy-agent/setup-opa@v2
+      - run: export COVERAGE=$(opa test policy -c | jq .coverage)
+      - uses: schneegans/dynamic-badges-action@v1.6.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 0c2e618c502912eff6e83e26b24e5c82
+          filename: opa-coverage-budge.json
+          label: Coverage
+          message: ${{ env.COVERAGE }}
+          minColorRange: 50
+          maxColorRange: 90
