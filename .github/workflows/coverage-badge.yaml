@@ -19,7 +19,7 @@ jobs:
       - name: Upload JSON
         uses: schneegans/dynamic-badges-action@v1.6.0
         with:
-          auth: ${{ secrets.GIST_SECRET }}
+          auth: ${{ secrets.GITHUB_TOKEN }}
           gistID: 0c2e618c502912eff6e83e26b24e5c82
           filename: opa-coverage-badge.json
           label: Coverage
