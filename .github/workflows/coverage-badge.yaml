@@ -16,14 +16,17 @@ jobs:
         uses: open-policy-agent/setup-opa@v2
       - name: Export coverage
         run: echo "COVERAGE=$(opa test policy -c | jq .coverage)" >> $GITHUB_ENV
+      - name: Calc color
+        run: |
+          coverage=${{ env.COVERAGE }}
+          min=50
+          max=90
+          rounded=$((90 < test ? 90 : test < 50 ? 50 : test))
+          hue=$(((rounded - min) * 120/ (max - min)))
+          echo "COLOR=hsl($hue, 100%, 40%)" >> $GITHUB_ENV
       - name: Upload JSON
-        uses: schneegans/dynamic-badges-action@v1.6.0
-        with:
-          auth: ${{ secrets.GITHUB_TOKEN }}
-          gistID: 0c2e618c502912eff6e83e26b24e5c82
-          filename: opa-coverage-badge.json
-          label: Coverage
-          message: ${{ env.COVERAGE }}%
-          valColorRange: ${{ env.COVERAGE }}
-          minColorRange: 50
-          maxColorRange: 90
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIST_SECRET }}
+        run: |
+          echo '{"schemaVersion":1,"label":"Coverage","message":"${{ env.COVERAGE }}%","color":"${{ env.COLOR }}"}' >> test.json
+          gh gist edit 6641f83484aca3643c1f6d9ddee38260 test.json
