@@ -19,10 +19,11 @@ jobs:
       - name: Calc color
         run: |
           coverage=${{ env.COVERAGE }}
+          floor=${coverage:0:2}
           min=50
           max=90
-          rounded=$((90 < test ? 90 : test < 50 ? 50 : test))
-          hue=$(((rounded - min) * 120/ (max - min)))
+          round=$((max < floor ? max : floor < min ? min : floor))
+          hue=$(((round - min) * 120/ (max - min)))
           echo "COLOR=hsl($hue, 100%, 40%)" >> $GITHUB_ENV
       - name: Upload JSON
         env:
