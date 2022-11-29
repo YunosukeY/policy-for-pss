@@ -9,23 +9,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: open-policy-agent/setup-opa@v2
-      - run: opa test policy -c > result.json
       - run: |
-          echo "coverage: $(cat result.json | jq .coverage)%" >> comment
-          cat <<EOF >> comment
-          <details>
-            <summary>
-              details
-            </summary>
-
-            \`\`\`json
-            $(cat result.json)
-            \`\`\`
-
-            </div>
-          </details>
-          EOF
+          echo "COVERAGE=$(opa test policy -c | jq .coverage)%" >> $GITHUB_ENV
+      - run: |
+          echo "coverage: ${{ env.COVERAGE }}%" >> comment
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           URL: ${{ github.event.pull_request.html_url }}
-        run: gh pr comment -F ./comment "${URL}"
+        run: |
+          gh pr comment -F ./comment "${URL}"
