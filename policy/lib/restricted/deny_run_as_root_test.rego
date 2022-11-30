@@ -1,6 +1,8 @@
 package lib.restricted
 
-test_deny_run_as_root {
+import future.keywords
+
+test_deny_run_as_root if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -31,7 +33,7 @@ test_deny_run_as_root {
 	} with input as pod
 }
 
-test_deny_run_as_root {
+test_deny_run_as_root if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -40,7 +42,7 @@ test_deny_run_as_root {
 	count(deny_run_as_root) == 0 with input as pod
 }
 
-test_deny_run_as_root {
+test_deny_run_as_root if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},

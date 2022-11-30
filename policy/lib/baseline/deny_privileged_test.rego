@@ -1,6 +1,8 @@
 package lib.baseline
 
-test_deny_privileged {
+import future.keywords
+
+test_deny_privileged if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},

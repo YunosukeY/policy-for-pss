@@ -1,6 +1,8 @@
 package lib.baseline
 
-test_deny_host_path {
+import future.keywords
+
+test_deny_host_path if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -15,7 +17,7 @@ test_deny_host_path {
 	deny_host_path == {"volume test-volume in pod myapp-pod in Pod/myapp-pod uses hostPath"} with input as pod
 }
 
-test_deny_host_path {
+test_deny_host_path if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -24,7 +26,7 @@ test_deny_host_path {
 	count(deny_host_path) == 0 with input as pod
 }
 
-test_deny_host_path {
+test_deny_host_path if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},

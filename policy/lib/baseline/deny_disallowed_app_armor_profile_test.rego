@@ -1,6 +1,8 @@
 package lib.baseline
 
-test_deny_disallowed_app_armor_profile {
+import future.keywords
+
+test_deny_disallowed_app_armor_profile if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -15,7 +17,7 @@ test_deny_disallowed_app_armor_profile {
 	deny_disallowed_app_armor_profile == {"pod myapp-pod in Pod/myapp-pod uses disalloed AppArmor profile \"container.apparmor.security.beta.kubernetes.io/myapp3: unconfined\""} with input as pod
 }
 
-test_deny_disallowed_app_armor_profile {
+test_deny_disallowed_app_armor_profile if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},

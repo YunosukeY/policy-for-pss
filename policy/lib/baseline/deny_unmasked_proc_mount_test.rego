@@ -1,6 +1,8 @@
 package lib.baseline
 
-test_deny_unmasked_proc_mount {
+import future.keywords
+
+test_deny_unmasked_proc_mount if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
