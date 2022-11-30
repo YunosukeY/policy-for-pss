@@ -1,5 +1,7 @@
 package lib.k8s
 
+import future.keywords
+
 workload_resources := [
 	"Deployment",
 	"ReplicaSet",
@@ -9,29 +11,29 @@ workload_resources := [
 	"ReplicationController",
 ]
 
-is_pod(object) {
+is_pod(object) if {
 	object.kind == "Pod"
 }
 
-is_workload_resources(object) {
-	object.kind == workload_resources[_]
+is_workload_resources(object) if {
+	object.kind in workload_resources
 }
 
-is_cron_job(object) {
+is_cron_job(object) if {
 	object.kind == "CronJob"
 }
 
-pod(object) := p {
+pod(object) := p if {
 	is_pod(object)
 	p := object
 }
 
-pod(object) := p {
+pod(object) := p if {
 	is_workload_resources(object)
 	p := object.spec.template
 }
 
-pod(object) := p {
+pod(object) := p if {
 	is_cron_job(object)
 	p := object.spec.jobTemplate.spec.template
 }
@@ -41,7 +43,7 @@ container_keys := {
 	"initContainers",
 }
 
-containers(object) := container {
+containers(object) := container if {
 	p := pod(object)
-	container := [p.spec[k][_] | some k; container_keys[k]]
+	container := [p.spec[k][_] | some k in container_keys]
 }
