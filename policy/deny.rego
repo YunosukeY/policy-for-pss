@@ -2,62 +2,52 @@ package main
 
 import data.lib.baseline
 import data.lib.restricted
+import future.keywords
 
 # Baseline
 
-deny[msg] {
-	some msg
-	baseline.deny_host_process[msg]
+deny contains msg if {
+	some msg in baseline.deny_host_process
 }
 
-deny[msg] {
-	some msg
-	baseline.deny_host_namespaces[msg]
+deny contains msg if {
+	some msg in baseline.deny_host_namespaces
 }
 
-deny[msg] {
-	some msg
-	baseline.deny_privileged[msg]
+deny contains msg if {
+	some msg in baseline.deny_privileged
 }
 
-deny[msg] {
-	some msg
-	baseline.deny_disallowed_capabilities[msg]
+deny contains msg if {
+	some msg in baseline.deny_disallowed_capabilities
 }
 
-deny[msg] {
-	some msg
-	baseline.deny_host_path[msg]
+deny contains msg if {
+	some msg in baseline.deny_host_path
 }
 
-deny[msg] {
-	some msg
-	baseline.deny_host_port[msg]
+deny contains msg if {
+	some msg in baseline.deny_host_port
 }
 
-deny[msg] {
-	some msg
-	baseline.deny_disallowed_app_armor_profile[msg]
+deny contains msg if {
+	some msg in baseline.deny_disallowed_app_armor_profile
 }
 
-deny[msg] {
-	some msg
-	baseline.deny_unmasked_proc_mount[msg]
+deny contains msg if {
+	some msg in baseline.deny_unmasked_proc_mount
 }
 
 # Restricted
 
-deny[msg] {
-	some msg
-	restricted.deny_privilege_escalation[msg]
+deny contains msg if {
+	some msg in restricted.deny_privilege_escalation
 }
 
-deny[msg] {
-	some msg
-	restricted.deny_run_as_root[msg]
+deny contains msg if {
+	some msg in restricted.deny_run_as_root
 }
 
-deny[msg] {
-	some msg
-	restricted.deny_disallowed_capabilities[msg]
+deny contains msg if {
+	some msg in restricted.deny_disallowed_capabilities
 }
