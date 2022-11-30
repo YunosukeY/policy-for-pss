@@ -2,14 +2,14 @@ package lib.k8s
 
 import future.keywords
 
-workload_resources := [
+workload_resources := {
 	"Deployment",
 	"ReplicaSet",
 	"StatefulSet",
 	"DaemonSet",
 	"Job",
 	"ReplicationController",
-]
+}
 
 is_pod(object) if {
 	object.kind == "Pod"
@@ -45,5 +45,5 @@ container_keys := {
 
 containers(object) := container if {
 	p := pod(object)
-	container := [p.spec[k][_] | some k in container_keys]
+	container := {c | some k in container_keys; some c in p.spec[k]}
 }

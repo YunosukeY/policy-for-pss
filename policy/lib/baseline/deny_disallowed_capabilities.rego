@@ -21,6 +21,7 @@ allowed_capabilities := {
 
 deny_disallowed_capabilities contains msg if {
 	some container in k8s.containers(input)
-	count({c | some c in container.securityContext.capabilities.add; not c in allowed_capabilities}) != 0
+	some c in container.securityContext.capabilities.add
+	not c in allowed_capabilities
 	msg := sprintf("container %s in %s/%s has disallowed capabilities", [container.name, input.kind, input.metadata.name])
 }

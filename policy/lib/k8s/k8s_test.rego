@@ -60,5 +60,5 @@ test_containers if {
 			],
 		},
 	}
-	containers(p1) == array.concat(p1.spec.containers, p1.spec.initContainers)
+	containers(p1) == {c | some c in p1.spec.containers} | {c | some c in p1.spec.initContainers}
 }
