@@ -1,6 +1,7 @@
 package lib.baseline
 
 import data.lib.k8s
+import future.keywords
 
 allowed_capabilities := {
 	"AUDIT_WRITE",
@@ -18,8 +19,8 @@ allowed_capabilities := {
 	"SYS_CHROOT",
 }
 
-deny_disallowed_capabilities[msg] {
-	container := k8s.containers(input)[_]
-	count({c | c := container.securityContext.capabilities.add[_]; not allowed_capabilities[c]}) != 0
+deny_disallowed_capabilities contains msg if {
+	container := k8s.containers(input)[_] # TODO
+	count({c | some c in container.securityContext.capabilities.add; not c in allowed_capabilities}) != 0
 	msg := sprintf("container %s in %s/%s has disallowed capabilities", [container.name, input.kind, input.metadata.name])
 }
