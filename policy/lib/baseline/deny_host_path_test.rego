@@ -12,7 +12,7 @@ test_deny_host_path {
 			},
 		}]},
 	}
-	deny_host_path == {"volume test-volume pod myapp-pod in Pod/myapp-pod uses hostPath"} with input as pod
+	deny_host_path == {"volume test-volume in pod myapp-pod in Pod/myapp-pod uses hostPath"} with input as pod
 }
 
 test_deny_host_path {
