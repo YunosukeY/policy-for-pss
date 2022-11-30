@@ -37,6 +37,11 @@ deny[msg] {
 
 deny[msg] {
 	some msg
+	baseline.deny_disallowed_app_armor_profile[msg]
+}
+
+deny[msg] {
+	some msg
 	baseline.deny_unmasked_proc_mount[msg]
 }
 
