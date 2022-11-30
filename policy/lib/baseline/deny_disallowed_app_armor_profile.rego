@@ -1,16 +1,17 @@
 package lib.baseline
 
 import data.lib.k8s
+import future.keywords
 
-allowed_profile(profile) {
+allowed_profile(profile) if {
 	profile == "runtime/default"
 }
 
-allowed_profile(profile) {
+allowed_profile(profile) if {
 	startswith(profile, "localhost/")
 }
 
-deny_disallowed_app_armor_profile[msg] {
+deny_disallowed_app_armor_profile contains msg if {
 	pod := k8s.pod(input)
 
 	some name
