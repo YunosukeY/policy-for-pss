@@ -1,6 +1,8 @@
 package lib.restricted
 
-test_deny_privilege_escalation {
+import future.keywords
+
+test_deny_privilege_escalation if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},

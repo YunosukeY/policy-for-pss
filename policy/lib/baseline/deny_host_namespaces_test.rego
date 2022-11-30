@@ -1,6 +1,8 @@
 package lib.baseline
 
-test_deny_host_namespaces {
+import future.keywords
+
+test_deny_host_namespaces if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -8,7 +10,7 @@ test_deny_host_namespaces {
 	count(deny_host_namespaces) == 0 with input as pod
 }
 
-test_deny_host_namespaces {
+test_deny_host_namespaces if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},

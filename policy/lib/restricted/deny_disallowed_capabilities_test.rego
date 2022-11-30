@@ -1,6 +1,8 @@
 package lib.restricted
 
-test_deny_too_many_capabilities {
+import future.keywords
+
+test_deny_too_many_capabilities if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},

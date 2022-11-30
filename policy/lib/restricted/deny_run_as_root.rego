@@ -1,17 +1,16 @@
 package lib.restricted
 
 import data.lib.k8s
+import future.keywords
 
-deny_run_as_root[msg] {
+deny_run_as_root contains msg if {
 	pod := k8s.pod(input)
 	not pod.spec.securityContext.runAsNonRoot
-	print(pod.metadata.name)
 	msg := sprintf("pod %s in %s/%s runs as root", [pod.metadata.name, input.kind, input.metadata.name])
 }
 
-deny_run_as_root[msg] {
-	container := k8s.containers(input)[_]
+deny_run_as_root contains msg if {
+	some container in k8s.containers(input)
 	not container.securityContext.runAsNonRoot
-	print(container.name)
 	msg := sprintf("container %s in %s/%s runs as root", [container.name, input.kind, input.metadata.name])
 }

@@ -1,6 +1,8 @@
 package lib.baseline
 
-test_deny_host_process {
+import future.keywords
+
+test_deny_host_process if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
