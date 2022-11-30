@@ -9,14 +9,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: open-policy-agent/setup-opa@v2
-      - run: echo "COVERAGE=$(opa test policy -c | jq .coverage)%" >> $GITHUB_ENV
+      - run: echo "COVERAGE=$(opa test policy -c | jq .coverage)" >> $GITHUB_ENV
       - uses: schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 0c2e618c502912eff6e83e26b24e5c82
           filename: opa-coverage-badge.json
           label: Coverage
-          message: ${{ env.COVERAGE }}
+          message: ${{ env.COVERAGE }}%
           valColorRange: ${{ env.COVERAGE }}
           minColorRange: 50
           maxColorRange: 90
