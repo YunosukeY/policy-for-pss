@@ -10,7 +10,7 @@ deny_run_as_root contains msg if {
 }
 
 deny_run_as_root contains msg if {
-	container := k8s.containers(input)[_]
+	some container in k8s.containers(input)
 	not container.securityContext.runAsNonRoot
 	msg := sprintf("container %s in %s/%s runs as root", [container.name, input.kind, input.metadata.name])
 }

@@ -10,7 +10,7 @@ deny_host_process contains msg if {
 }
 
 deny_host_process contains msg if {
-	container := k8s.containers(input)[_]
+	some container in k8s.containers(input)
 	container.securityContext.windowsOptions.hostProcess
 	msg := sprintf("container %s in %s/%s uses hostProcess", [container.name, input.kind, input.metadata.name])
 }
