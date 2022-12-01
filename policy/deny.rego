@@ -45,6 +45,10 @@ deny contains msg if {
 # Restricted
 
 deny contains msg if {
+	some msg in restricted.deny_disallowed_volume_types
+}
+
+deny contains msg if {
 	some msg in restricted.deny_privilege_escalation
 }
 
