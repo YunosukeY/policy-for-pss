@@ -38,6 +38,10 @@ deny contains msg if {
 	some msg in baseline.deny_unmasked_proc_mount
 }
 
+deny contains msg if {
+	some msg in baseline.deny_disallowed_sysctls
+}
+
 # Restricted
 
 deny contains msg if {
