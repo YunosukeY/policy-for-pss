@@ -6,3 +6,29 @@
 Implementing Pod Security Standards as Conftest Policy.
 
 [Pod Security Standards | Kubernetes](https://kubernetes.io/docs/concepts/security/pod-security-standards/)
+
+## Features
+
+If you want to allow violations for specific resources, you can use `allowXxx` labels.
+
+| Label name                 | Description             |
+| -------------------------- | ----------------------- |
+| `allowHostProcess`         |                         |
+| `allowHostNamespace`       |                         |
+| `allowPrivileged`          |                         |
+|                            |                         |
+| `allowHostPath`            | allows hostPath volumes |
+| `allowHostPort`            | allows host ports       |
+|                            |                         |
+|                            |                         |
+|                            |                         |
+|                            |                         |
+| `allowAllSysctls`          |                         |
+|                            |                         |
+| `allowPrivilegeEscalation` |                         |
+| `allowRunAsRoot`           |                         |
+| `allowRunAsRootUser`       |                         |
+|                            |                         |
+|                            |                         |
+
+### Examples

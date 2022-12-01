@@ -4,6 +4,7 @@ import data.lib.k8s
 import future.keywords
 
 deny_host_path contains msg if {
+	not input.metadata.labels.allowHostPath
 	pod := k8s.pod(input)
 	some volume in pod.spec.volumes
 	volume.hostPath

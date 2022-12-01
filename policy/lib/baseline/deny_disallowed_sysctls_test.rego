@@ -33,3 +33,18 @@ test_deny_disallowed_sysctls if {
 	}
 	count(deny_disallowed_sysctls) == 0 with input as pod
 }
+
+test_deny_disallowed_sysctls if {
+	pod := {
+		"kind": "Pod",
+		"metadata": {
+			"name": "myapp-pod",
+			"labels": {"allowAllSysctls": true},
+		},
+		"spec": {"securityContext": {"sysctls": [{
+			"name": "net.core.somaxconn",
+			"value": "1024",
+		}]}},
+	}
+	count(deny_disallowed_sysctls) == 0 with input as pod
+}

@@ -37,3 +37,21 @@ test_deny_host_path if {
 	}
 	count(deny_host_path) == 0 with input as pod
 }
+
+test_deny_host_path if {
+	pod := {
+		"kind": "Pod",
+		"metadata": {
+			"name": "myapp-pod",
+			"labels": {"allowHostPath": true},
+		},
+		"spec": {"volumes": [{
+			"name": "test-volume",
+			"hostPath": {
+				"path": "/data",
+				"type": "Directory",
+			},
+		}]},
+	}
+	count(deny_host_path) == 0 with input as pod
+}

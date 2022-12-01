@@ -12,6 +12,7 @@ allowed_name := {
 }
 
 deny_disallowed_sysctls contains msg if {
+	not input.metadata.labels.allowAllSysctls
 	pod := k8s.pod(input)
 	some sysctl in pod.spec.securityContext.sysctls
 	not sysctl.name in allowed_name
