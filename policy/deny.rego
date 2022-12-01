@@ -57,5 +57,9 @@ deny contains msg if {
 }
 
 deny contains msg if {
+	some msg in restricted.deny_run_as_root_user
+}
+
+deny contains msg if {
 	some msg in restricted.deny_disallowed_capabilities
 }
