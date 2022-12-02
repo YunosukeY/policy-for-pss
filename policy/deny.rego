@@ -35,6 +35,10 @@ deny contains msg if {
 }
 
 deny contains msg if {
+	some msg in baseline.deny_disallowed_selinux_options
+}
+
+deny contains msg if {
 	some msg in baseline.deny_unmasked_proc_mount
 }
 
