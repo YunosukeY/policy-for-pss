@@ -9,7 +9,7 @@ Implementing Pod Security Standards as Conftest Policy.
 
 ## Examples
 
-With an unsafe manifest
+With an unsafe manifest:
 
 ```sh
 $ conftest test example/unsafe.yaml
@@ -23,7 +23,7 @@ FAIL - example/unsafe.yaml - main - pod in Deployment/nginx-deployment runs as r
 17 tests, 11 passed, 0 warnings, 6 failures, 0 exceptions
 ```
 
-With a safe manifest
+With a safe manifest:
 
 ```sh
 $ conftest test example/safe.yaml
@@ -41,7 +41,7 @@ $ conftest test --update https://raw.githubusercontent.com/YunosukeY/policies-fo
 
 If you want to allow violations for specific resources, you can use `allowXxx` labels.
 
-For baseline
+For baseline level rules:
 
 - `allowHostProcess`
 - `allowHostNamespace`
@@ -55,7 +55,7 @@ For baseline
 - `allowPrivilegedLevelSeccompTypes`
 - `allowAllSysctls`
 
-For restricted
+For restricted level rules:
 
 - `allowAllVolumeTypes`
 - `allowPrivilegeEscalation`
