@@ -4,6 +4,9 @@ import data.lib.k8s
 import future.keywords
 
 deny_privilege_escalation contains msg if {
+	pod := k8s.pod(input)
+	not pod.spec.os.name == "windows"
+
 	some container in k8s.containers(input)
 	not container.securityContext.allowPrivilegeEscalation == false
 	msg := sprintf("container %s in %s/%s allows privilege escalation", [container.name, input.kind, input.metadata.name])

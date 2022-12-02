@@ -31,3 +31,19 @@ test_deny_privilege_escalation if {
 		"container allowed-myapp in Pod/myapp-pod allows privilege escalation",
 	} with input as pod
 }
+
+test_deny_privilege_escalation if {
+	pod := {
+		"kind": "Pod",
+		"metadata": {"name": "myapp-pod"},
+		"spec": {
+			"os": {"name": "windows"},
+			"containers": [{
+				"name": "myapp",
+				"image": "busybox:1.28",
+				"command": ["sh", "-c", "echo The app is running! && sleep 3600"],
+			}],
+		},
+	}
+	count(deny_privilege_escalation) == 0 with input as pod
+}
