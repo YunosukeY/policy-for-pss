@@ -69,5 +69,9 @@ deny contains msg if {
 }
 
 deny contains msg if {
+	some msg in restricted.deny_disallowed_seccomp_types
+}
+
+deny contains msg if {
 	some msg in restricted.deny_disallowed_capabilities
 }
