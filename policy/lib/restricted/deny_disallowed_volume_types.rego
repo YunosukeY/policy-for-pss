@@ -4,6 +4,8 @@ import data.lib.k8s
 import future.keywords
 
 deny_disallowed_volume_types contains msg if {
+	not input.metadata.labels.allowAllVolumeTypes
+
 	pod := k8s.pod(input)
 	some volume in pod.spec.volumes
 

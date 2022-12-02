@@ -4,6 +4,8 @@ import data.lib.k8s
 import future.keywords
 
 deny_privilege_escalation contains msg if {
+	not input.metadata.labels.allowPrivilegeEscalation
+
 	pod := k8s.pod(input)
 	not pod.spec.os.name == "windows"
 

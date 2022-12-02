@@ -12,6 +12,8 @@ allowed_profile(profile) if {
 }
 
 deny_disallowed_app_armor_profile contains msg if {
+	not input.metadata.labels.allowAllAppArmorProfile
+
 	pod := k8s.pod(input)
 
 	some name

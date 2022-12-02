@@ -25,3 +25,23 @@ test_deny_host_port if {
 	}
 	deny_host_port == {"containerPort 8080 in container myapp in Pod/myapp-pod uses hostPort"} with input as pod
 }
+
+test_deny_host_port if {
+	pod := {
+		"kind": "Pod",
+		"metadata": {
+			"name": "myapp-pod",
+			"labels": {"allowHostPort": true},
+		},
+		"spec": {"containers": [{
+			"name": "myapp",
+			"image": "busybox:1.28",
+			"command": ["sh", "-c", "echo The app is running! && sleep 3600"],
+			"ports": [{
+				"containerPort": 8080,
+				"hostPort": 8080,
+			}],
+		}]},
+	}
+	count(deny_host_port) == 0 with input as pod
+}

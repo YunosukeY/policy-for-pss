@@ -22,3 +22,15 @@ test_deny_host_namespaces if {
 		"pod in Pod/myapp-pod uses hostIPC",
 	} with input as pod
 }
+
+test_deny_host_namespaces if {
+	pod := {
+		"kind": "Pod",
+		"metadata": {
+			"name": "myapp-pod",
+			"labels": {"allowHostNamespace": true},
+		},
+		"spec": {"hostNetwork": true, "hostPID": true, "hostIPC": true},
+	}
+	count(deny_host_namespaces) == 0 with input as pod
+}

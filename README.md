@@ -9,7 +9,7 @@ This repository implements Pod Security Standards as Conftest Policy.
 
 ## Examples
 
-### With an unsafe manifest
+With an unsafe manifest:
 
 ```sh
 $ conftest test example/unsafe.yaml
@@ -23,7 +23,7 @@ FAIL - example/unsafe.yaml - main - pod in Deployment/nginx-deployment runs as r
 17 tests, 11 passed, 0 warnings, 6 failures, 0 exceptions
 ```
 
-### With a safe manifest
+With a safe manifest:
 
 ```sh
 $ conftest test example/safe.yaml
@@ -35,4 +35,64 @@ $ conftest test example/safe.yaml
 
 ```sh
 $ conftest test --update https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/policy/deny.rego <file-to-test>
+```
+
+## Features
+
+If you want to allow violations for specific resources, you can use `allowXxx` labels.
+
+For baseline level rules:
+
+- `allowHostProcess`
+- `allowHostNamespace`
+- `allowPrivileged`
+- `allowPrivilegedLevelCapabilities`
+- `allowHostPath`
+- `allowHostPort`
+- `allowAllAppArmorProfile`
+- `allowAllSeLinuxOptions`
+- `allowUnmaskedProcMount`
+- `allowPrivilegedLevelSeccompTypes`
+- `allowAllSysctls`
+
+For restricted level rules:
+
+- `allowAllVolumeTypes`
+- `allowPrivilegeEscalation`
+- `allowRunAsRoot`
+- `allowRunAsRootUser`
+- `allowBaselineLevelSeccompTypes`
+- `allowBaselineLevelCapabilities`
+
+### Examples
+
+```sh
+$ cat example/allowed.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    allowPrivilegeEscalation: true
+    allowRunAsRoot: true
+    allowBaselineLevelSeccompTypes: true
+    allowBaselineLevelCapabilities: true
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+```
+
+```sh
+$ conftest test example/allowed.yaml
+
+17 tests, 17 passed, 0 warnings, 0 failures, 0 exceptions
 ```

@@ -9,6 +9,7 @@ allowed_seccomp_type := {
 }
 
 deny_disallowed_seccomp_types contains msg if {
+	not input.metadata.labels.allowPrivilegedLevelSeccompTypes
 	pod := k8s.pod(input)
 	type := pod.spec.securityContext.seccompProfile.type
 	not type in allowed_seccomp_type
@@ -16,6 +17,7 @@ deny_disallowed_seccomp_types contains msg if {
 }
 
 deny_disallowed_seccomp_types contains msg if {
+	not input.metadata.labels.allowPrivilegedLevelSeccompTypes
 	some container in k8s.containers(input)
 	type := container.securityContext.seccompProfile.type
 	not type in allowed_seccomp_type

@@ -9,6 +9,8 @@ allowed_seccomp_type := {
 }
 
 deny_disallowed_seccomp_types contains msg if {
+	not input.metadata.labels.allowBaselineLevelSeccompTypes
+
 	pod := k8s.pod(input)
 	not pod.spec.os.name == "windows"
 
@@ -18,6 +20,8 @@ deny_disallowed_seccomp_types contains msg if {
 }
 
 deny_disallowed_seccomp_types contains msg if {
+	not input.metadata.labels.allowBaselineLevelSeccompTypes
+
 	pod := k8s.pod(input)
 	not pod.spec.os.name == "windows"
 
@@ -28,6 +32,8 @@ deny_disallowed_seccomp_types contains msg if {
 }
 
 deny_disallowed_seccomp_types contains msg if {
+	not input.metadata.labels.allowBaselineLevelSeccompTypes
+
 	pod := k8s.pod(input)
 	not pod.spec.os.name == "windows"
 
@@ -36,6 +42,8 @@ deny_disallowed_seccomp_types contains msg if {
 }
 
 deny_disallowed_seccomp_types contains msg if {
+	not input.metadata.labels.allowBaselineLevelSeccompTypes
+
 	pod := k8s.pod(input)
 	not pod.spec.os.name == "windows"
 

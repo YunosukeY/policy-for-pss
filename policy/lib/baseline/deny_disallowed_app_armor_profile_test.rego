@@ -24,3 +24,15 @@ test_deny_disallowed_app_armor_profile if {
 	}
 	count(deny_disallowed_app_armor_profile) == 0 with input as pod
 }
+
+test_deny_disallowed_app_armor_profile if {
+	pod := {
+		"kind": "Pod",
+		"metadata": {
+			"name": "myapp-pod",
+			"labels": {"allowAllAppArmorProfile": true},
+			"annotations": {"container.apparmor.security.beta.kubernetes.io/myapp3": "unconfined"},
+		},
+	}
+	count(deny_disallowed_app_armor_profile) == 0 with input as pod
+}

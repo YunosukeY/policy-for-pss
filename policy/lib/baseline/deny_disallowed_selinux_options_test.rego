@@ -55,3 +55,23 @@ test_deny_disallowed_selinux_options if {
 	}
 	count(deny_disallowed_selinux_options) == 0 with input as pod
 }
+
+test_deny_disallowed_selinux_options if {
+	pod := {
+		"kind": "Pod",
+		"metadata": {
+			"name": "myapp-pod",
+			"labels": {"allowAllSeLinuxOptions": true},
+		},
+		"spec": {
+			"securityContext": {"seLinuxOptions": {"type": "foo", "user": "bar", "role": "baz"}},
+			"containers": [{
+				"name": "myapp",
+				"image": "busybox:1.28",
+				"command": ["sh", "-c", "echo The app is running! && sleep 3600"],
+				"securityContext": {"seLinuxOptions": {"type": "foo", "user": "bar", "role": "baz"}},
+			}],
+		},
+	}
+	count(deny_disallowed_selinux_options) == 0 with input as pod
+}

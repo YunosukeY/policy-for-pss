@@ -47,3 +47,20 @@ test_deny_privilege_escalation if {
 	}
 	count(deny_privilege_escalation) == 0 with input as pod
 }
+
+test_deny_privilege_escalation if {
+	pod := {
+		"kind": "Pod",
+		"metadata": {
+			"name": "myapp-pod",
+			"labels": {"allowPrivilegeEscalation": true},
+		},
+		"spec": {"containers": [{
+			"name": "allowed-myapp",
+			"image": "busybox:1.28",
+			"command": ["sh", "-c", "echo The app is running! && sleep 3600"],
+			"securityContext": {"allowPrivilegeEscalation": true},
+		}]},
+	}
+	count(deny_privilege_escalation) == 0 with input as pod
+}
