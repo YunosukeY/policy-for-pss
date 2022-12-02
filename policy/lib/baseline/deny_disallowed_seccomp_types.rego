@@ -12,7 +12,7 @@ deny_disallowed_seccomp_types contains msg if {
 	pod := k8s.pod(input)
 	type := pod.spec.securityContext.seccompProfile.type
 	not type in allowed_seccomp_type
-	msg := sprintf("pod %s in %s/%s uses disallowed seccompProfile type: %s", [pod.metadata.name, input.kind, input.metadata.name, type])
+	msg := sprintf("pod in %s/%s uses disallowed seccompProfile type: %s", [input.kind, input.metadata.name, type])
 }
 
 deny_disallowed_seccomp_types contains msg if {

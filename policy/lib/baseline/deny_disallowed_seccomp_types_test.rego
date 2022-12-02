@@ -17,7 +17,7 @@ test_deny_disallowed_seccomp_types if {
 		},
 	}
 	deny_disallowed_seccomp_types == {
-		"pod myapp-pod in Pod/myapp-pod uses disallowed seccompProfile type: Unconfined",
+		"pod in Pod/myapp-pod uses disallowed seccompProfile type: Unconfined",
 		"container myapp in Pod/myapp-pod uses disallowed seccompProfile type: Unconfined",
 	} with input as pod
 }

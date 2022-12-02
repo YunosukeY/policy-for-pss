@@ -16,5 +16,5 @@ deny_disallowed_volume_types contains msg if {
 	not volume.projected
 	not volume.secret
 
-	msg := sprintf("volume %s in pod %s in %s/%s has disallowed volume type", [volume.name, pod.metadata.name, input.kind, input.metadata.name])
+	msg := sprintf("volume %s in %s/%s has disallowed volume type", [volume.name, input.kind, input.metadata.name])
 }

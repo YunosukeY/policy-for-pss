@@ -17,11 +17,11 @@ test_deny_disallowed_selinux_options if {
 		},
 	}
 	deny_disallowed_selinux_options == {
-		"pod myapp-pod in Pod/myapp-pod uses disallowed SELinux option type: foo",
+		"pod in Pod/myapp-pod uses disallowed SELinux option type: foo",
 		"container myapp in Pod/myapp-pod uses disallowed SELinux option type: foo",
-		"pod myapp-pod in Pod/myapp-pod uses disallowed SELinux option user: bar",
+		"pod in Pod/myapp-pod uses disallowed SELinux option user: bar",
 		"container myapp in Pod/myapp-pod uses disallowed SELinux option user: bar",
-		"pod myapp-pod in Pod/myapp-pod uses disallowed SELinux option role: baz",
+		"pod in Pod/myapp-pod uses disallowed SELinux option role: baz",
 		"container myapp in Pod/myapp-pod uses disallowed SELinux option role: baz",
 	} with input as pod
 }

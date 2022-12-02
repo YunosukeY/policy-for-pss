@@ -14,7 +14,7 @@ test_deny_disallowed_app_armor_profile if {
 			},
 		},
 	}
-	deny_disallowed_app_armor_profile == {"pod myapp-pod in Pod/myapp-pod uses disalloed AppArmor profile \"container.apparmor.security.beta.kubernetes.io/myapp3: unconfined\""} with input as pod
+	deny_disallowed_app_armor_profile == {"pod in Pod/myapp-pod uses disalloed AppArmor profile \"container.apparmor.security.beta.kubernetes.io/myapp3: unconfined\""} with input as pod
 }
 
 test_deny_disallowed_app_armor_profile if {

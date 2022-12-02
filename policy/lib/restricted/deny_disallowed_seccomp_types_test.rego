@@ -17,7 +17,7 @@ test_deny_disallowed_seccomp_types if {
 		},
 	}
 	deny_disallowed_seccomp_types == {
-		"pod myapp-pod in Pod/myapp-pod uses disallowed seccompProfile type: Unconfined",
+		"pod in Pod/myapp-pod uses disallowed seccompProfile type: Unconfined",
 		"container myapp in Pod/myapp-pod uses disallowed seccompProfile type: Unconfined",
 	} with input as pod
 }
@@ -50,7 +50,7 @@ test_deny_disallowed_seccomp_types if {
 		}]},
 	}
 	deny_disallowed_seccomp_types == {
-		"pod myapp-pod in Pod/myapp-pod must be set seccomp profile",
+		"pod in Pod/myapp-pod must be set seccomp profile",
 		"container myapp in Pod/myapp-pod must be set seccomp profile",
 	} with input as pod
 }
@@ -85,7 +85,7 @@ test_deny_disallowed_seccomp_types if {
 		},
 	}
 	deny_disallowed_seccomp_types == {
-		"pod myapp-pod in Pod/myapp-pod must be set seccomp profile",
+		"pod in Pod/myapp-pod must be set seccomp profile",
 		"container myapp in Pod/myapp-pod must be set seccomp profile",
 	} with input as pod
 }
