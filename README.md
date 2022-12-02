@@ -30,3 +30,9 @@ $ conftest test example/safe.yaml
 
 17 tests, 17 passed, 0 warnings, 0 failures, 0 exceptions
 ```
+
+## Usage
+
+```sh
+$ conftest test --update https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/policy/deny.rego <file-to-test>
+```
