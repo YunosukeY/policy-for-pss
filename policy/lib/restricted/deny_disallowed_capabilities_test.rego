@@ -49,3 +49,27 @@ test_deny_too_many_capabilities if {
 		"container disallowed-capability-myapp in Pod/myapp-pod has disallowed capabilities",
 	} with input as pod
 }
+
+test_deny_too_many_capabilities if {
+	pod := {
+		"kind": "Pod",
+		"metadata": {
+			"name": "myapp-pod",
+			"labels": {"allowBaselineLevelCapabilities": true},
+		},
+		"spec": {"containers": [
+			{
+				"name": "not-dropped-myapp",
+				"image": "busybox:1.28",
+				"command": ["sh", "-c", "echo The app is running! && sleep 3600"],
+			},
+			{
+				"name": "disallowed-capability-myapp",
+				"image": "busybox:1.28",
+				"command": ["sh", "-c", "echo The app is running! && sleep 3600"],
+				"securityContext": {"capabilities": {"drop": ["ALL"], "add": ["NET_BIND_SERVICE", "AUDIT_WRITE"]}},
+			},
+		]},
+	}
+	count(deny_disallowed_capabilities) == 0 with input as pod
+}

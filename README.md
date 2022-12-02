@@ -46,13 +46,13 @@ For baseline
 - `allowHostProcess`
 - `allowHostNamespace`
 - `allowPrivileged`
--
+- `allowPrivilegedLevelCapabilities`
 - `allowHostPath`
 - `allowHostPort`
 - `allowAllAppArmorProfile`
 - `allowAllSeLinuxOptions`
 - `allowUnmaskedProcMount`
--
+- `allowPrivilegedLevelSeccompTypes`
 - `allowAllSysctls`
 
 For restricted
@@ -61,7 +61,7 @@ For restricted
 - `allowPrivilegeEscalation`
 - `allowRunAsRoot`
 - `allowRunAsRootUser`
--
--
+- `allowBaselineLevelSeccompTypes`
+- `allowBaselineLevelCapabilities`
 
 ### Examples
