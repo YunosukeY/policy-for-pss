@@ -43,6 +43,10 @@ deny contains msg if {
 }
 
 deny contains msg if {
+	some msg in baseline.deny_disallowed_seccomp_types
+}
+
+deny contains msg if {
 	some msg in baseline.deny_disallowed_sysctls
 }
 
