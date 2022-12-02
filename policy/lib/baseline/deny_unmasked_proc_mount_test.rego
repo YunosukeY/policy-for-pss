@@ -28,3 +28,20 @@ test_deny_unmasked_proc_mount if {
 	}
 	deny_unmasked_proc_mount == {"container unmasked-myapp in Pod/myapp-pod doesn't mask /proc mount"} with input as pod
 }
+
+test_deny_unmasked_proc_mount if {
+	pod := {
+		"kind": "Pod",
+		"metadata": {
+			"name": "myapp-pod",
+			"labels": {"allowUnmaskedProcMount": true},
+		},
+		"spec": {"containers": [{
+			"name": "unmasked-myapp",
+			"image": "busybox:1.28",
+			"command": ["sh", "-c", "echo The app is running! && sleep 3600"],
+			"securityContext": {"procMount": "Unmasked"},
+		}]},
+	}
+	count(deny_unmasked_proc_mount) == 0 with input as pod
+}

@@ -41,24 +41,31 @@ $ conftest test --update https://raw.githubusercontent.com/YunosukeY/policies-fo
 
 If you want to allow violations for specific resources, you can use `allowXxx` labels.
 
-| Label name                 | Description             |
-| -------------------------- | ----------------------- |
-| `allowHostProcess`         |                         |
-| `allowHostNamespace`       |                         |
-| `allowPrivileged`          |                         |
-|                            |                         |
-| `allowHostPath`            | allows hostPath volumes |
-| `allowHostPort`            | allows host ports       |
-|                            |                         |
-|                            |                         |
-|                            |                         |
-|                            |                         |
-| `allowAllSysctls`          |                         |
-|                            |                         |
-| `allowPrivilegeEscalation` |                         |
-| `allowRunAsRoot`           |                         |
-| `allowRunAsRootUser`       |                         |
-|                            |                         |
-|                            |                         |
+### For `baseline`
+
+| Label name                | Description             |
+| ------------------------- | ----------------------- |
+| `allowHostProcess`        |                         |
+| `allowHostNamespace`      |                         |
+| `allowPrivileged`         |                         |
+|                           |                         |
+| `allowHostPath`           | allows hostPath volumes |
+| `allowHostPort`           | allows host ports       |
+| `allowAllAppArmorProfile` |                         |
+| `allowAllSeLinuxOptions`  |                         |
+| `allowUnmaskedProcMount`  |                         |
+|                           |                         |
+| `allowAllSysctls`         |                         |
+
+### For `restricted`
+
+| Label name                 | Description |
+| -------------------------- | ----------- |
+| `allowAllVolumeTypes`      |             |
+| `allowPrivilegeEscalation` |             |
+| `allowRunAsRoot`           |             |
+| `allowRunAsRootUser`       |             |
+|                            |             |
+|                            |             |
 
 ### Examples

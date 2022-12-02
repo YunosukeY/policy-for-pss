@@ -11,6 +11,7 @@ allowed_type := {
 }
 
 deny_disallowed_selinux_options contains msg if {
+	not input.metadata.labels.allowAllSeLinuxOptions
 	pod := k8s.pod(input)
 	type := pod.spec.securityContext.seLinuxOptions.type
 	not type in allowed_type
@@ -18,6 +19,7 @@ deny_disallowed_selinux_options contains msg if {
 }
 
 deny_disallowed_selinux_options contains msg if {
+	not input.metadata.labels.allowAllSeLinuxOptions
 	some container in k8s.containers(input)
 	type := container.securityContext.seLinuxOptions.type
 	not type in allowed_type
@@ -25,6 +27,7 @@ deny_disallowed_selinux_options contains msg if {
 }
 
 deny_disallowed_selinux_options contains msg if {
+	not input.metadata.labels.allowAllSeLinuxOptions
 	pod := k8s.pod(input)
 	user := pod.spec.securityContext.seLinuxOptions.user
 	user != ""
@@ -32,6 +35,7 @@ deny_disallowed_selinux_options contains msg if {
 }
 
 deny_disallowed_selinux_options contains msg if {
+	not input.metadata.labels.allowAllSeLinuxOptions
 	some container in k8s.containers(input)
 	user := container.securityContext.seLinuxOptions.user
 	user != ""
@@ -39,6 +43,7 @@ deny_disallowed_selinux_options contains msg if {
 }
 
 deny_disallowed_selinux_options contains msg if {
+	not input.metadata.labels.allowAllSeLinuxOptions
 	pod := k8s.pod(input)
 	role := pod.spec.securityContext.seLinuxOptions.role
 	role != ""
@@ -46,6 +51,7 @@ deny_disallowed_selinux_options contains msg if {
 }
 
 deny_disallowed_selinux_options contains msg if {
+	not input.metadata.labels.allowAllSeLinuxOptions
 	some container in k8s.containers(input)
 	role := container.securityContext.seLinuxOptions.role
 	role != ""
