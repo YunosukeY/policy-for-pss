@@ -5,7 +5,7 @@ import future.keywords
 
 deny_disallowed_capabilities contains msg if {
 	some container in k8s.containers(input)
-	{c | some c in container.securityContext.capabilities.drop} & {"ALL"} != {"ALL"}
+	count({c | some c in container.securityContext.capabilities.drop; c == "ALL"}) == 0
 	msg := sprintf("container %s in %s/%s doesn't drop \"ALL\" capability", [container.name, input.kind, input.metadata.name])
 }
 
