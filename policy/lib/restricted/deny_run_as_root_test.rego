@@ -27,7 +27,7 @@ test_deny_run_as_root if {
 		]},
 	}
 	deny_run_as_root == {
-		"pod myapp-pod in Pod/myapp-pod runs as root",
+		"pod in Pod/myapp-pod runs as root",
 		"container myapp in Pod/myapp-pod runs as root",
 		"container root-myapp in Pod/myapp-pod runs as root",
 	} with input as pod
@@ -48,5 +48,5 @@ test_deny_run_as_root if {
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"securityContext": {"runAsNonRoot": false}},
 	}
-	deny_run_as_root == {"pod myapp-pod in Pod/myapp-pod runs as root"} with input as pod
+	deny_run_as_root == {"pod in Pod/myapp-pod runs as root"} with input as pod
 }

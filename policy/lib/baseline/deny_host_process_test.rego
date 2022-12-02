@@ -24,7 +24,7 @@ test_deny_host_process if {
 		},
 	}
 	deny_host_process == {
-		"pod myapp-pod in Pod/myapp-pod uses hostProcess",
+		"pod in Pod/myapp-pod uses hostProcess",
 		"container myapp-with-hostProcess in Pod/myapp-pod uses hostProcess",
 	} with input as pod
 }

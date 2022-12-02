@@ -14,7 +14,7 @@ deny_disallowed_selinux_options contains msg if {
 	pod := k8s.pod(input)
 	type := pod.spec.securityContext.seLinuxOptions.type
 	not type in allowed_type
-	msg := sprintf("pod %s in %s/%s uses disallowed SELinux option type: %s", [pod.metadata.name, input.kind, input.metadata.name, type])
+	msg := sprintf("pod in %s/%s uses disallowed SELinux option type: %s", [input.kind, input.metadata.name, type])
 }
 
 deny_disallowed_selinux_options contains msg if {
@@ -28,7 +28,7 @@ deny_disallowed_selinux_options contains msg if {
 	pod := k8s.pod(input)
 	user := pod.spec.securityContext.seLinuxOptions.user
 	user != ""
-	msg := sprintf("pod %s in %s/%s uses disallowed SELinux option user: %s", [pod.metadata.name, input.kind, input.metadata.name, user])
+	msg := sprintf("pod in %s/%s uses disallowed SELinux option user: %s", [input.kind, input.metadata.name, user])
 }
 
 deny_disallowed_selinux_options contains msg if {
@@ -42,7 +42,7 @@ deny_disallowed_selinux_options contains msg if {
 	pod := k8s.pod(input)
 	role := pod.spec.securityContext.seLinuxOptions.role
 	role != ""
-	msg := sprintf("pod %s in %s/%s uses disallowed SELinux option role: %s", [pod.metadata.name, input.kind, input.metadata.name, role])
+	msg := sprintf("pod in %s/%s uses disallowed SELinux option role: %s", [input.kind, input.metadata.name, role])
 }
 
 deny_disallowed_selinux_options contains msg if {
