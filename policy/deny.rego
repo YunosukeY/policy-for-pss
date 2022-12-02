@@ -35,7 +35,15 @@ deny contains msg if {
 }
 
 deny contains msg if {
+	some msg in baseline.deny_disallowed_selinux_options
+}
+
+deny contains msg if {
 	some msg in baseline.deny_unmasked_proc_mount
+}
+
+deny contains msg if {
+	some msg in baseline.deny_disallowed_seccomp_types
 }
 
 deny contains msg if {
@@ -58,6 +66,10 @@ deny contains msg if {
 
 deny contains msg if {
 	some msg in restricted.deny_run_as_root_user
+}
+
+deny contains msg if {
+	some msg in restricted.deny_disallowed_seccomp_types
 }
 
 deny contains msg if {

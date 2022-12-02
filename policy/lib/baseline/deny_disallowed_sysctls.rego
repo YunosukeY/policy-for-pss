@@ -16,5 +16,5 @@ deny_disallowed_sysctls contains msg if {
 	pod := k8s.pod(input)
 	some sysctl in pod.spec.securityContext.sysctls
 	not sysctl.name in allowed_name
-	msg := sprintf("pod %s in %s/%s uses disallowed sysctl: %s", [pod.metadata.name, input.kind, input.metadata.name, sysctl.name])
+	msg := sprintf("pod in %s/%s uses disallowed sysctl: %s", [input.kind, input.metadata.name, sysctl.name])
 }

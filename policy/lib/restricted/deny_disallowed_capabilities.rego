@@ -5,15 +5,15 @@ import future.keywords
 
 deny_disallowed_capabilities contains msg if {
 	some container in k8s.containers(input)
-	{c | some c in container.securityContext.capabilities.drop} & {"ALL"} != {"ALL"}
+	count({c | some c in container.securityContext.capabilities.drop; c == "ALL"}) == 0
 	msg := sprintf("container %s in %s/%s doesn't drop \"ALL\" capability", [container.name, input.kind, input.metadata.name])
 }
 
 allowed_capabilities := {"NET_BIND_SERVICE"}
 
 deny_disallowed_capabilities contains msg if {
-	p := k8s.pod(input)
-	{n | n := p.spec.os.name; n == "windows"} != {"windows"}
+	pod := k8s.pod(input)
+	not pod.spec.os.name == "windows"
 
 	some container in k8s.containers(input)
 	some c in container.securityContext.capabilities.add

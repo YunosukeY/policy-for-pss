@@ -7,7 +7,7 @@ deny_run_as_root contains msg if {
 	not input.metadata.labels.allowRunAsRoot
 	pod := k8s.pod(input)
 	not pod.spec.securityContext.runAsNonRoot
-	msg := sprintf("pod %s in %s/%s runs as root", [pod.metadata.name, input.kind, input.metadata.name])
+	msg := sprintf("pod in %s/%s runs as root", [input.kind, input.metadata.name])
 }
 
 deny_run_as_root contains msg if {

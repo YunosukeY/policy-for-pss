@@ -19,5 +19,5 @@ deny_disallowed_app_armor_profile contains msg if {
 	startswith(name, "container.apparmor.security.beta.kubernetes.io/")
 	not allowed_profile(value)
 
-	msg := sprintf("pod %s in %s/%s uses disalloed AppArmor profile \"%s: %s\"", [pod.metadata.name, input.kind, input.metadata.name, name, value])
+	msg := sprintf("pod in %s/%s uses disalloed AppArmor profile \"%s: %s\"", [input.kind, input.metadata.name, name, value])
 }

@@ -25,7 +25,7 @@ test_deny_run_as_root_user if {
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"securityContext": {"runAsUser": 0}},
 	}
-	deny_run_as_root_user == {"pod myapp-pod in Pod/myapp-pod runs as root"} with input as pod
+	deny_run_as_root_user == {"pod in Pod/myapp-pod runs as root"} with input as pod
 }
 
 test_deny_run_as_root_user if {
