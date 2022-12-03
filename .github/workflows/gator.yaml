@@ -1,0 +1,21 @@
+name: gator
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  gator-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          curl -fsSLo konstraint https://github.com/plexsystems/konstraint/releases/download/v0.24.0/konstraint-linux-amd64
+          chmod +x konstraint
+          ./konstraint create . -o k8s
+      - run: |
+          curl -fsSLO https://github.com/open-policy-agent/gatekeeper/releases/download/v3.10.0/gator-v3.10.0-linux-amd64.tar.gz
+          tar -zxvf gator-v3.10.0-linux-amd64.tar.gz
+          ./gator verify ./...

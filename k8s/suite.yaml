@@ -1,0 +1,31 @@
+kind: Suite
+apiVersion: test.gatekeeper.sh/v1alpha1
+tests:
+  - name: test-pss-policies
+    template: template_Policy.yaml
+    constraint: constraint_Policy.yaml
+    cases:
+      - name: unsafe
+        object: "../example/unsafe.yaml"
+        assertions:
+          - violations: 6
+          - message: "restricted level: container nginx in Deployment/nginx-deployment allows privilege escalation"
+            violations: 1
+          - message: "restricted level: container nginx in Deployment/nginx-deployment doesn't drop \"ALL\" capability"
+            violations: 1
+          - message: "restricted level: container nginx in Deployment/nginx-deployment must be set seccomp profile"
+            violations: 1
+          - message: "restricted level: container nginx in Deployment/nginx-deployment runs as root"
+            violations: 1
+          - message: "restricted level: pod in Deployment/nginx-deployment must be set seccomp profile"
+            violations: 1
+          - message: "restricted level: pod in Deployment/nginx-deployment runs as root"
+            violations: 1
+      - name: safe
+        object: "../example/safe.yaml"
+        assertions:
+          - violations: no
+      - name: allowed;
+        object: "../example/allowed.yaml"
+        assertions:
+          - violations: no
