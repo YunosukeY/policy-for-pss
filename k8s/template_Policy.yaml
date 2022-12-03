@@ -1,0 +1,730 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  creationTimestamp: null
+  name: policy
+spec:
+  crd:
+    spec:
+      names:
+        kind: Policy
+  targets:
+  - libs:
+    - |-
+      package lib.baseline.app_armor_profile
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      allowed_profile(profile) if {
+        profile == "runtime/default"
+      }
+
+      allowed_profile(profile) if {
+        startswith(profile, "localhost/")
+      }
+
+      violation_disallowed_app_armor_profile contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowAllAppArmorProfile
+
+        pod := k8s.pod(resource)
+        some name
+        value := pod.metadata.annotations[name]
+        startswith(name, "container.apparmor.security.beta.kubernetes.io/")
+        not allowed_profile(value)
+
+        msg := wrapper.format("baseline level: pod in %s/%s uses disalloed AppArmor profile \"%s: %s\"", [resource.kind, resource.metadata.name, name, value])
+      }
+    - |-
+      package lib.k8s
+
+      import future.keywords
+
+      workload_resources := {
+        "Deployment",
+        "ReplicaSet",
+        "StatefulSet",
+        "DaemonSet",
+        "Job",
+        "ReplicationController",
+      }
+
+      is_pod(object) if {
+        object.kind == "Pod"
+      }
+
+      is_workload_resources(object) if {
+        object.kind in workload_resources
+      }
+
+      is_cron_job(object) if {
+        object.kind == "CronJob"
+      }
+
+      pod(object) := p if {
+        is_pod(object)
+        p := object
+      }
+
+      pod(object) := p if {
+        is_workload_resources(object)
+        p := object.spec.template
+      }
+
+      pod(object) := p if {
+        is_cron_job(object)
+        p := object.spec.jobTemplate.spec.template
+      }
+
+      container_keys := {
+        "containers",
+        "initContainers",
+      }
+
+      containers(object) := container if {
+        p := pod(object)
+        container := {c | some k in container_keys; some c in p.spec[k]}
+      }
+    - |-
+      package lib.wrapper
+
+      import future.keywords
+
+      default is_gatekeeper = false
+
+      is_gatekeeper if {
+        input.review.object
+      }
+
+      resource(object) := object.review.object if {
+        is_gatekeeper
+      }
+
+      resource(object) := object if {
+        not is_gatekeeper
+      }
+
+      format(format, value) := output if {
+        is_gatekeeper
+        output := {"msg": sprintf(format, value)}
+      }
+
+      format(format, value) := output if {
+        not is_gatekeeper
+        output := sprintf(format, value)
+      }
+    - |-
+      package lib.baseline.baseline_capabilities
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      allowed_capabilities := {
+        "AUDIT_WRITE",
+        "CHOWN",
+        "DAC_OVERRIDE",
+        "FOWNER",
+        "FSETID",
+        "KILL",
+        "MKNOD",
+        "NET_BIND_SERVICE",
+        "SETFCAP",
+        "SETGID",
+        "SETPCAP",
+        "SETUID",
+        "SYS_CHROOT",
+      }
+
+      violation_disallowed_capabilities contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowPrivilegedLevelCapabilities
+
+        some container in k8s.containers(resource)
+        some c in container.securityContext.capabilities.add
+        not c in allowed_capabilities
+
+        msg := wrapper.format("baseline level: container %s in %s/%s has disallowed capabilities", [container.name, resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.baseline.baseline_seccomp_types
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      allowed_seccomp_type := {
+        "RuntimeDefault",
+        "Localhost",
+      }
+
+      violation_disallowed_seccomp_types contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowPrivilegedLevelSeccompTypes
+
+        pod := k8s.pod(resource)
+        type := pod.spec.securityContext.seccompProfile.type
+        not type in allowed_seccomp_type
+
+        msg := wrapper.format("baseline level: pod in %s/%s uses disallowed seccompProfile type: %s", [resource.kind, resource.metadata.name, type])
+      }
+
+      violation_disallowed_seccomp_types contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowPrivilegedLevelSeccompTypes
+
+        some container in k8s.containers(resource)
+        type := container.securityContext.seccompProfile.type
+        not type in allowed_seccomp_type
+
+        msg := wrapper.format("baseline level: container %s in %s/%s uses disallowed seccompProfile type: %s", [container.name, resource.kind, resource.metadata.name, type])
+      }
+    - |-
+      package lib.baseline.host_namespaces
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      violation_host_namespaces contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowHostNamespace
+
+        pod := k8s.pod(resource)
+        pod.spec.hostNetwork
+
+        msg := wrapper.format("baseline level: pod in %s/%s uses hostNetWork", [resource.kind, resource.metadata.name])
+      }
+
+      violation_host_namespaces contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowHostNamespace
+
+        pod := k8s.pod(resource)
+        pod.spec.hostPID
+
+        msg := wrapper.format("baseline level: pod in %s/%s uses hostPID", [resource.kind, resource.metadata.name])
+      }
+
+      violation_host_namespaces contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowHostNamespace
+
+        pod := k8s.pod(resource)
+        pod.spec.hostIPC
+
+        msg := wrapper.format("baseline level: pod in %s/%s uses hostIPC", [resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.baseline.host_path
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      violation_host_path contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowHostPath
+
+        pod := k8s.pod(resource)
+        some volume in pod.spec.volumes
+        volume.hostPath
+
+        msg := wrapper.format("baseline level: volume %s in %s/%s uses hostPath", [volume.name, resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.baseline.host_port
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      violation_host_port contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowHostPort
+
+        some container in k8s.containers(resource)
+        some port in container.ports
+        port.hostPort != 0
+
+        msg := wrapper.format("baseline level: containerPort %d in container %s in %s/%s uses hostPort", [port.containerPort, container.name, resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.baseline.host_process
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      violation_host_process contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowHostProcess
+
+        pod := k8s.pod(resource)
+        pod.spec.securityContext.windowsOptions.hostProcess
+
+        msg := wrapper.format("baseline level: pod in %s/%s uses hostProcess", [resource.kind, resource.metadata.name])
+      }
+
+      violation_host_process contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowHostProcess
+
+        some container in k8s.containers(resource)
+        container.securityContext.windowsOptions.hostProcess
+
+        msg := wrapper.format("baseline level: container %s in %s/%s uses hostProcess", [container.name, resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.baseline.privileged
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      violation_privileged contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowPrivileged
+
+        some container in k8s.containers(resource)
+        container.securityContext.privileged
+
+        msg := wrapper.format("baseline level: container %s in %s/%s is privileged", [container.name, resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.baseline.proc_mount
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      violation_unmasked_proc_mount contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowUnmaskedProcMount
+
+        some container in k8s.containers(resource)
+        container.securityContext.procMount != "Default"
+
+        msg := wrapper.format("baseline level: container %s in %s/%s doesn't mask /proc mount", [container.name, resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.baseline.selinux_options
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      allowed_type := {
+        "",
+        "container_t",
+        "container_init_t",
+        "container_kvm_t",
+      }
+
+      violation_disallowed_selinux_options contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowAllSeLinuxOptions
+
+        pod := k8s.pod(resource)
+        type := pod.spec.securityContext.seLinuxOptions.type
+        not type in allowed_type
+
+        msg := wrapper.format("baseline level: pod in %s/%s uses disallowed SELinux option type: %s", [resource.kind, resource.metadata.name, type])
+      }
+
+      violation_disallowed_selinux_options contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowAllSeLinuxOptions
+
+        some container in k8s.containers(resource)
+        type := container.securityContext.seLinuxOptions.type
+        not type in allowed_type
+
+        msg := wrapper.format("baseline level: container %s in %s/%s uses disallowed SELinux option type: %s", [container.name, resource.kind, resource.metadata.name, type])
+      }
+
+      violation_disallowed_selinux_options contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowAllSeLinuxOptions
+
+        pod := k8s.pod(resource)
+        user := pod.spec.securityContext.seLinuxOptions.user
+        user != ""
+
+        msg := wrapper.format("baseline level: pod in %s/%s uses disallowed SELinux option user: %s", [resource.kind, resource.metadata.name, user])
+      }
+
+      violation_disallowed_selinux_options contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowAllSeLinuxOptions
+
+        some container in k8s.containers(resource)
+        user := container.securityContext.seLinuxOptions.user
+        user != ""
+
+        msg := wrapper.format("baseline level: container %s in %s/%s uses disallowed SELinux option user: %s", [container.name, resource.kind, resource.metadata.name, user])
+      }
+
+      violation_disallowed_selinux_options contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowAllSeLinuxOptions
+
+        pod := k8s.pod(resource)
+        role := pod.spec.securityContext.seLinuxOptions.role
+        role != ""
+
+        msg := wrapper.format("baseline level: pod in %s/%s uses disallowed SELinux option role: %s", [resource.kind, resource.metadata.name, role])
+      }
+
+      violation_disallowed_selinux_options contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowAllSeLinuxOptions
+
+        some container in k8s.containers(resource)
+        role := container.securityContext.seLinuxOptions.role
+        role != ""
+
+        msg := wrapper.format("baseline level: container %s in %s/%s uses disallowed SELinux option role: %s", [container.name, resource.kind, resource.metadata.name, role])
+      }
+    - |-
+      package lib.baseline.sysctls
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      allowed_name := {
+        "kernel.shm_rmid_forced",
+        "net.ipv4.ip_local_port_range",
+        "net.ipv4.ip_unprivileged_port_start",
+        "net.ipv4.tcp_syncookies",
+        "net.ipv4.ping_group_range",
+      }
+
+      violation_disallowed_sysctls contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowAllSysctls
+
+        pod := k8s.pod(resource)
+        some sysctl in pod.spec.securityContext.sysctls
+        not sysctl.name in allowed_name
+
+        msg := wrapper.format("baseline level: pod in %s/%s uses disallowed sysctl: %s", [resource.kind, resource.metadata.name, sysctl.name])
+      }
+    - |-
+      package lib.restricted.privilege_escalation
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      violation_privilege_escalation contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowPrivilegeEscalation
+
+        pod := k8s.pod(resource)
+        not pod.spec.os.name == "windows"
+
+        some container in k8s.containers(resource)
+        not container.securityContext.allowPrivilegeEscalation == false
+
+        msg := wrapper.format("restricted level: container %s in %s/%s allows privilege escalation", [container.name, resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.restricted.restricted_capabilities
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      violation_disallowed_capabilities contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowBaselineLevelCapabilities
+
+        some container in k8s.containers(resource)
+        count({c | some c in container.securityContext.capabilities.drop; c == "ALL"}) == 0
+
+        msg := wrapper.format("restricted level: container %s in %s/%s doesn't drop \"ALL\" capability", [container.name, resource.kind, resource.metadata.name])
+      }
+
+      allowed_capabilities := {"NET_BIND_SERVICE"}
+
+      violation_disallowed_capabilities contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowBaselineLevelCapabilities
+
+        pod := k8s.pod(resource)
+        not pod.spec.os.name == "windows"
+
+        some container in k8s.containers(resource)
+        some c in container.securityContext.capabilities.add
+        not c in allowed_capabilities
+
+        msg := wrapper.format("restricted level: container %s in %s/%s has disallowed capabilities", [container.name, resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.restricted.restricted_seccomp_types
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      allowed_seccomp_type := {
+        "RuntimeDefault",
+        "Localhost",
+      }
+
+      violation_disallowed_seccomp_types contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowBaselineLevelSeccompTypes
+
+        pod := k8s.pod(resource)
+        not pod.spec.os.name == "windows"
+
+        type := pod.spec.securityContext.seccompProfile.type
+        not type in allowed_seccomp_type
+
+        msg := wrapper.format("restricted level: pod in %s/%s uses disallowed seccompProfile type: %s", [resource.kind, resource.metadata.name, type])
+      }
+
+      violation_disallowed_seccomp_types contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowBaselineLevelSeccompTypes
+
+        pod := k8s.pod(resource)
+        not pod.spec.os.name == "windows"
+
+        some container in k8s.containers(resource)
+        type := container.securityContext.seccompProfile.type
+        not type in allowed_seccomp_type
+
+        msg := wrapper.format("restricted level: container %s in %s/%s uses disallowed seccompProfile type: %s", [container.name, resource.kind, resource.metadata.name, type])
+      }
+
+      violation_disallowed_seccomp_types contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowBaselineLevelSeccompTypes
+
+        pod := k8s.pod(resource)
+        not pod.spec.os.name == "windows"
+
+        not pod.spec.securityContext.seccompProfile.type
+
+        msg := wrapper.format("restricted level: pod in %s/%s must be set seccomp profile", [resource.kind, resource.metadata.name])
+      }
+
+      violation_disallowed_seccomp_types contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowBaselineLevelSeccompTypes
+
+        pod := k8s.pod(resource)
+        not pod.spec.os.name == "windows"
+
+        some container in k8s.containers(resource)
+        not container.securityContext.seccompProfile.type
+
+        msg := wrapper.format("restricted level: container %s in %s/%s must be set seccomp profile", [container.name, resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.restricted.run_as_root
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      violation_run_as_root contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowRunAsRoot
+
+        pod := k8s.pod(resource)
+        not pod.spec.securityContext.runAsNonRoot
+
+        msg := wrapper.format("restricted level: pod in %s/%s runs as root", [resource.kind, resource.metadata.name])
+      }
+
+      violation_run_as_root contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowRunAsRoot
+
+        some container in k8s.containers(resource)
+        not container.securityContext.runAsNonRoot
+
+        msg := wrapper.format("restricted level: container %s in %s/%s runs as root", [container.name, resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.restricted.run_as_root_user
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      violation_run_as_root_user contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowRunAsRootUser
+
+        pod := k8s.pod(resource)
+        pod.spec.securityContext.runAsUser == 0
+
+        msg := wrapper.format("restricted level: pod in %s/%s runs as root", [resource.kind, resource.metadata.name])
+      }
+
+      violation_run_as_root_user contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowRunAsRootUser
+
+        some container in k8s.containers(resource)
+        container.securityContext.runAsUser == 0
+
+        msg := wrapper.format("restricted level: container %s in %s/%s runs as root", [container.name, resource.kind, resource.metadata.name])
+      }
+    - |-
+      package lib.restricted.volume_types
+
+      import data.lib.k8s
+      import data.lib.wrapper
+      import future.keywords
+
+      violation_disallowed_volume_types contains msg if {
+        resource := wrapper.resource(input)
+
+        not resource.metadata.labels.allowAllVolumeTypes
+
+        pod := k8s.pod(resource)
+        some volume in pod.spec.volumes
+        not volume.configMap
+        not volume.csi
+        not volume.downwardAPI
+        not volume.emptyDir
+        not volume.ephemeral
+        not volume.persistentVolumeClaim
+        not volume.projected
+        not volume.secret
+
+        msg := wrapper.format("restricted level: volume %s in %s/%s has disallowed volume type", [volume.name, resource.kind, resource.metadata.name])
+      }
+    rego: |-
+      package main
+
+      import data.lib.baseline.app_armor_profile
+      import data.lib.baseline.baseline_capabilities
+      import data.lib.baseline.baseline_seccomp_types
+      import data.lib.baseline.host_namespaces
+      import data.lib.baseline.host_path
+      import data.lib.baseline.host_port
+      import data.lib.baseline.host_process
+      import data.lib.baseline.privileged
+      import data.lib.baseline.proc_mount
+      import data.lib.baseline.selinux_options
+      import data.lib.baseline.sysctls
+      import data.lib.restricted.privilege_escalation
+      import data.lib.restricted.restricted_capabilities
+      import data.lib.restricted.restricted_seccomp_types
+      import data.lib.restricted.run_as_root
+      import data.lib.restricted.run_as_root_user
+      import data.lib.restricted.volume_types
+      import future.keywords
+
+
+      violation contains msg if {
+        some msg in host_process.violation_host_process
+      }
+
+      violation contains msg if {
+        some msg in host_namespaces.violation_host_namespaces
+      }
+
+      violation contains msg if {
+        some msg in privileged.violation_privileged
+      }
+
+      violation contains msg if {
+        some msg in baseline_capabilities.violation_disallowed_capabilities
+      }
+
+      violation contains msg if {
+        some msg in host_path.violation_host_path
+      }
+
+      violation contains msg if {
+        some msg in host_port.violation_host_port
+      }
+
+      violation contains msg if {
+        some msg in app_armor_profile.violation_disallowed_app_armor_profile
+      }
+
+      violation contains msg if {
+        some msg in selinux_options.violation_disallowed_selinux_options
+      }
+
+      violation contains msg if {
+        some msg in proc_mount.violation_unmasked_proc_mount
+      }
+
+      violation contains msg if {
+        some msg in baseline_seccomp_types.violation_disallowed_seccomp_types
+      }
+
+      violation contains msg if {
+        some msg in sysctls.violation_disallowed_sysctls
+      }
+
+
+      violation contains msg if {
+        some msg in volume_types.violation_disallowed_volume_types
+      }
+
+      violation contains msg if {
+        some msg in privilege_escalation.violation_privilege_escalation
+      }
+
+      violation contains msg if {
+        some msg in run_as_root.violation_run_as_root
+      }
+
+      violation contains msg if {
+        some msg in run_as_root_user.violation_run_as_root_user
+      }
+
+      violation contains msg if {
+        some msg in restricted_seccomp_types.violation_disallowed_seccomp_types
+      }
+
+      violation contains msg if {
+        some msg in restricted_capabilities.violation_disallowed_capabilities
+      }
+    target: admission.k8s.gatekeeper.sh
+status: {}
