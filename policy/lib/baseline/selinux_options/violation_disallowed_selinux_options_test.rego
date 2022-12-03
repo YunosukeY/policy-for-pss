@@ -1,4 +1,4 @@
-package lib.baseline
+package lib.baseline.selinux_options
 
 import future.keywords
 

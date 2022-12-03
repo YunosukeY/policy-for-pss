@@ -1,4 +1,4 @@
-package lib.baseline
+package lib.baseline.selinux_options
 
 import data.lib.k8s
 import data.lib.wrapper

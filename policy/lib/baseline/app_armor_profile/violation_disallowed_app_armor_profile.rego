@@ -1,4 +1,4 @@
-package lib.baseline
+package lib.baseline.app_armor_profile
 
 import data.lib.k8s
 import data.lib.wrapper

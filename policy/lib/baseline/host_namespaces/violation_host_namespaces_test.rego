@@ -1,4 +1,4 @@
-package lib.baseline
+package lib.baseline.host_namespaces
 
 import future.keywords
 

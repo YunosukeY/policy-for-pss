@@ -1,4 +1,4 @@
-package lib.baseline
+package lib.baseline.baseline_seccomp_types
 
 import future.keywords
 
