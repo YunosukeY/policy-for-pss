@@ -11,5 +11,5 @@ deny_privilege_escalation contains msg if {
 
 	some container in k8s.containers(input)
 	not container.securityContext.allowPrivilegeEscalation == false
-	msg := sprintf("container %s in %s/%s allows privilege escalation", [container.name, input.kind, input.metadata.name])
+	msg := sprintf("restricted level: container %s in %s/%s allows privilege escalation", [container.name, input.kind, input.metadata.name])
 }

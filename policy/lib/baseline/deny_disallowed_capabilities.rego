@@ -24,5 +24,5 @@ deny_disallowed_capabilities contains msg if {
 	some container in k8s.containers(input)
 	some c in container.securityContext.capabilities.add
 	not c in allowed_capabilities
-	msg := sprintf("container %s in %s/%s has disallowed capabilities", [container.name, input.kind, input.metadata.name])
+	msg := sprintf("baseline level: container %s in %s/%s has disallowed capabilities", [container.name, input.kind, input.metadata.name])
 }

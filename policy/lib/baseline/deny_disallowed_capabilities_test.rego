@@ -33,8 +33,8 @@ test_deny_too_many_capabilities if {
 		]},
 	}
 	deny_disallowed_capabilities == {
-		"container expanded-myapp in Pod/myapp-pod has disallowed capabilities",
-		"container expanded-myapp2 in Pod/myapp-pod has disallowed capabilities",
+		"baseline level: container expanded-myapp in Pod/myapp-pod has disallowed capabilities",
+		"baseline level: container expanded-myapp2 in Pod/myapp-pod has disallowed capabilities",
 	} with input as pod
 }
 

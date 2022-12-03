@@ -17,9 +17,9 @@ test_deny_host_namespaces if {
 		"spec": {"hostNetwork": true, "hostPID": true, "hostIPC": true},
 	}
 	deny_host_namespaces == {
-		"pod in Pod/myapp-pod uses hostNetWork",
-		"pod in Pod/myapp-pod uses hostPID",
-		"pod in Pod/myapp-pod uses hostIPC",
+		"baseline level: pod in Pod/myapp-pod uses hostNetWork",
+		"baseline level: pod in Pod/myapp-pod uses hostPID",
+		"baseline level: pod in Pod/myapp-pod uses hostIPC",
 	} with input as pod
 }
 

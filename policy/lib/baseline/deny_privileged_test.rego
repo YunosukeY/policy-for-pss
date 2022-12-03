@@ -20,7 +20,7 @@ test_deny_privileged if {
 			},
 		]},
 	}
-	deny_privileged == {"container privileged-myapp in Pod/myapp-pod is privileged"} with input as pod
+	deny_privileged == {"baseline level: container privileged-myapp in Pod/myapp-pod is privileged"} with input as pod
 }
 
 test_deny_privileged if {
