@@ -1,14 +1,16 @@
 package lib.restricted
 
 import data.lib.k8s
+import data.lib.wrapper
 import future.keywords
 
 violation_disallowed_volume_types contains msg if {
-	not input.metadata.labels.allowAllVolumeTypes
+	resource := wrapper.resource(input)
 
-	pod := k8s.pod(input)
+	not resource.metadata.labels.allowAllVolumeTypes
+
+	pod := k8s.pod(resource)
 	some volume in pod.spec.volumes
-
 	not volume.configMap
 	not volume.csi
 	not volume.downwardAPI
@@ -18,5 +20,5 @@ violation_disallowed_volume_types contains msg if {
 	not volume.projected
 	not volume.secret
 
-	msg := sprintf("restricted level: volume %s in %s/%s has disallowed volume type", [volume.name, input.kind, input.metadata.name])
+	msg := wrapper.format("restricted level: volume %s in %s/%s has disallowed volume type", [volume.name, resource.kind, resource.metadata.name])
 }

@@ -1,6 +1,7 @@
 package lib.baseline
 
 import data.lib.k8s
+import data.lib.wrapper
 import future.keywords
 
 allowed_profile(profile) if {
@@ -12,14 +13,15 @@ allowed_profile(profile) if {
 }
 
 violation_disallowed_app_armor_profile contains msg if {
-	not input.metadata.labels.allowAllAppArmorProfile
+	resource := wrapper.resource(input)
 
-	pod := k8s.pod(input)
+	not resource.metadata.labels.allowAllAppArmorProfile
 
+	pod := k8s.pod(resource)
 	some name
 	value := pod.metadata.annotations[name]
 	startswith(name, "container.apparmor.security.beta.kubernetes.io/")
 	not allowed_profile(value)
 
-	msg := sprintf("baseline level: pod in %s/%s uses disalloed AppArmor profile \"%s: %s\"", [input.kind, input.metadata.name, name, value])
+	msg := wrapper.format("baseline level: pod in %s/%s uses disalloed AppArmor profile \"%s: %s\"", [resource.kind, resource.metadata.name, name, value])
 }

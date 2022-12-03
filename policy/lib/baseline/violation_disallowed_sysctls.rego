@@ -1,6 +1,7 @@
 package lib.baseline
 
 import data.lib.k8s
+import data.lib.wrapper
 import future.keywords
 
 allowed_name := {
@@ -12,9 +13,13 @@ allowed_name := {
 }
 
 violation_disallowed_sysctls contains msg if {
-	not input.metadata.labels.allowAllSysctls
-	pod := k8s.pod(input)
+	resource := wrapper.resource(input)
+
+	not resource.metadata.labels.allowAllSysctls
+
+	pod := k8s.pod(resource)
 	some sysctl in pod.spec.securityContext.sysctls
 	not sysctl.name in allowed_name
-	msg := sprintf("baseline level: pod in %s/%s uses disallowed sysctl: %s", [input.kind, input.metadata.name, sysctl.name])
+
+	msg := wrapper.format("baseline level: pod in %s/%s uses disallowed sysctl: %s", [resource.kind, resource.metadata.name, sysctl.name])
 }

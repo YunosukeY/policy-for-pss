@@ -1,6 +1,7 @@
 package lib.baseline
 
 import data.lib.k8s
+import data.lib.wrapper
 import future.keywords
 
 allowed_type := {
@@ -11,49 +12,73 @@ allowed_type := {
 }
 
 violation_disallowed_selinux_options contains msg if {
-	not input.metadata.labels.allowAllSeLinuxOptions
-	pod := k8s.pod(input)
+	resource := wrapper.resource(input)
+
+	not resource.metadata.labels.allowAllSeLinuxOptions
+
+	pod := k8s.pod(resource)
 	type := pod.spec.securityContext.seLinuxOptions.type
 	not type in allowed_type
-	msg := sprintf("baseline level: pod in %s/%s uses disallowed SELinux option type: %s", [input.kind, input.metadata.name, type])
+
+	msg := wrapper.format("baseline level: pod in %s/%s uses disallowed SELinux option type: %s", [resource.kind, resource.metadata.name, type])
 }
 
 violation_disallowed_selinux_options contains msg if {
-	not input.metadata.labels.allowAllSeLinuxOptions
-	some container in k8s.containers(input)
+	resource := wrapper.resource(input)
+
+	not resource.metadata.labels.allowAllSeLinuxOptions
+
+	some container in k8s.containers(resource)
 	type := container.securityContext.seLinuxOptions.type
 	not type in allowed_type
-	msg := sprintf("baseline level: container %s in %s/%s uses disallowed SELinux option type: %s", [container.name, input.kind, input.metadata.name, type])
+
+	msg := wrapper.format("baseline level: container %s in %s/%s uses disallowed SELinux option type: %s", [container.name, resource.kind, resource.metadata.name, type])
 }
 
 violation_disallowed_selinux_options contains msg if {
-	not input.metadata.labels.allowAllSeLinuxOptions
-	pod := k8s.pod(input)
+	resource := wrapper.resource(input)
+
+	not resource.metadata.labels.allowAllSeLinuxOptions
+
+	pod := k8s.pod(resource)
 	user := pod.spec.securityContext.seLinuxOptions.user
 	user != ""
-	msg := sprintf("baseline level: pod in %s/%s uses disallowed SELinux option user: %s", [input.kind, input.metadata.name, user])
+
+	msg := wrapper.format("baseline level: pod in %s/%s uses disallowed SELinux option user: %s", [resource.kind, resource.metadata.name, user])
 }
 
 violation_disallowed_selinux_options contains msg if {
-	not input.metadata.labels.allowAllSeLinuxOptions
-	some container in k8s.containers(input)
+	resource := wrapper.resource(input)
+
+	not resource.metadata.labels.allowAllSeLinuxOptions
+
+	some container in k8s.containers(resource)
 	user := container.securityContext.seLinuxOptions.user
 	user != ""
-	msg := sprintf("baseline level: container %s in %s/%s uses disallowed SELinux option user: %s", [container.name, input.kind, input.metadata.name, user])
+
+	msg := wrapper.format("baseline level: container %s in %s/%s uses disallowed SELinux option user: %s", [container.name, resource.kind, resource.metadata.name, user])
 }
 
 violation_disallowed_selinux_options contains msg if {
-	not input.metadata.labels.allowAllSeLinuxOptions
-	pod := k8s.pod(input)
+	resource := wrapper.resource(input)
+
+	not resource.metadata.labels.allowAllSeLinuxOptions
+
+	pod := k8s.pod(resource)
 	role := pod.spec.securityContext.seLinuxOptions.role
 	role != ""
-	msg := sprintf("baseline level: pod in %s/%s uses disallowed SELinux option role: %s", [input.kind, input.metadata.name, role])
+
+	msg := wrapper.format("baseline level: pod in %s/%s uses disallowed SELinux option role: %s", [resource.kind, resource.metadata.name, role])
 }
 
 violation_disallowed_selinux_options contains msg if {
-	not input.metadata.labels.allowAllSeLinuxOptions
-	some container in k8s.containers(input)
+	resource := wrapper.resource(input)
+
+	not resource.metadata.labels.allowAllSeLinuxOptions
+
+	some container in k8s.containers(resource)
 	role := container.securityContext.seLinuxOptions.role
 	role != ""
-	msg := sprintf("baseline level: container %s in %s/%s uses disallowed SELinux option role: %s", [container.name, input.kind, input.metadata.name, role])
+
+	msg := wrapper.format("baseline level: container %s in %s/%s uses disallowed SELinux option role: %s", [container.name, resource.kind, resource.metadata.name, role])
 }

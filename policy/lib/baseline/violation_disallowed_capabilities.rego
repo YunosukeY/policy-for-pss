@@ -1,6 +1,7 @@
 package lib.baseline
 
 import data.lib.k8s
+import data.lib.wrapper
 import future.keywords
 
 allowed_capabilities := {
@@ -20,9 +21,13 @@ allowed_capabilities := {
 }
 
 violation_disallowed_capabilities contains msg if {
-	not input.metadata.labels.allowPrivilegedLevelCapabilities
-	some container in k8s.containers(input)
+	resource := wrapper.resource(input)
+
+	not resource.metadata.labels.allowPrivilegedLevelCapabilities
+
+	some container in k8s.containers(resource)
 	some c in container.securityContext.capabilities.add
 	not c in allowed_capabilities
-	msg := sprintf("baseline level: container %s in %s/%s has disallowed capabilities", [container.name, input.kind, input.metadata.name])
+
+	msg := wrapper.format("baseline level: container %s in %s/%s has disallowed capabilities", [container.name, resource.kind, resource.metadata.name])
 }
