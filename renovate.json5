@@ -6,6 +6,6 @@
   branchConcurrentLimit: 0,
 
   kubernetes: {
-    fileMatch: ["^example/.+\\.yaml$", "^k8s/.+\\.yaml$"],
+    fileMatch: ["^(example|k8s)/.+\\.yaml$"],
   },
 }
