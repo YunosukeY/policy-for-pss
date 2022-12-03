@@ -11,3 +11,7 @@ registries:
 packages:
 - name: open-policy-agent/opa@v0.46.1
 - name: open-policy-agent/conftest@v0.36.0
+- name: kubernetes-sigs/kind@v0.17.0
+- name: helm/helm@v3.10.2
+- name: helmfile/helmfile@v0.148.1
+- name: kubernetes/kubectl
