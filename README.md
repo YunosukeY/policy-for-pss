@@ -1,7 +1,8 @@
 # Conftest Policies for Pod Security Standards
 
-[![ci](https://github.com/YunosukeY/policies-for-pss/actions/workflows/ci.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/policies-for-pss/actions/workflows/ci.yaml)
+[![opa](https://github.com/YunosukeY/policies-for-pss/actions/workflows/opa.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/policies-for-pss/actions/workflows/opa.yaml)
 ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/YunosukeY/0c2e618c502912eff6e83e26b24e5c82/raw/opa-coverage-badge.json)
+[![gator](https://github.com/YunosukeY/policies-for-pss/actions/workflows/gator.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/policies-for-pss/actions/workflows/gator.yaml)
 
 This repository implements Pod Security Standards as Conftest Policy.
 
