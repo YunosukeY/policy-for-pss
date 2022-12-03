@@ -34,7 +34,7 @@ $ conftest test example/safe.yaml
 ## Usage
 
 ```sh
-$ conftest test --update https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/policy/deny.rego <file-to-test>
+$ conftest test --update https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/policy/pss.rego <file-to-test>
 ```
 
 ## Features
