@@ -4,38 +4,22 @@
 ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/YunosukeY/0c2e618c502912eff6e83e26b24e5c82/raw/opa-coverage-badge.json)
 [![gator](https://github.com/YunosukeY/policies-for-pss/actions/workflows/gator.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/policies-for-pss/actions/workflows/gator.yaml)
 
-This repository implements Pod Security Standards as Conftest Policy.
-
-[Pod Security Standards | Kubernetes](https://kubernetes.io/docs/concepts/security/pod-security-standards/)
-
-## Examples
-
-With an unsafe manifest:
-
-```sh
-$ conftest test example/unsafe.yaml
-FAIL - example/unsafe.yaml - main - restricted level: container nginx in Deployment/nginx-deployment allows privilege escalation
-FAIL - example/unsafe.yaml - main - restricted level: container nginx in Deployment/nginx-deployment doesn't drop "ALL" capability
-FAIL - example/unsafe.yaml - main - restricted level: container nginx in Deployment/nginx-deployment must be set seccomp profile
-FAIL - example/unsafe.yaml - main - restricted level: container nginx in Deployment/nginx-deployment runs as root
-FAIL - example/unsafe.yaml - main - restricted level: pod in Deployment/nginx-deployment must be set seccomp profile
-FAIL - example/unsafe.yaml - main - restricted level: pod in Deployment/nginx-deployment runs as root
-
-17 tests, 11 passed, 0 warnings, 6 failures, 0 exceptions
-```
-
-With a safe manifest:
-
-```sh
-$ conftest test example/safe.yaml
-
-17 tests, 17 passed, 0 warnings, 0 failures, 0 exceptions
-```
+This repository implements Pod Security Standards as Conftest policy.<br>
+It also corresponds to Gatekeeper policy.
 
 ## Usage
 
+For Conftest:
+
 ```sh
 $ conftest test --update https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/policy/pss.rego <file-to-test>
+```
+
+For Gatekeeper:
+
+```sh
+$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/k8s/template_Policy.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/k8s/constraint_Policy.yaml
 ```
 
 ## Features
@@ -65,19 +49,18 @@ For restricted level rules:
 - `allowBaselineLevelSeccompTypes`
 - `allowBaselineLevelCapabilities`
 
-### Examples
+Example:
 
-```sh
-$ cat example/allowed.yaml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
   labels:
-    allowPrivilegeEscalation: true
-    allowRunAsRoot: true
-    allowBaselineLevelSeccompTypes: true
-    allowBaselineLevelCapabilities: true
+    allowPrivilegeEscalation: "true"
+    allowRunAsRoot: "true"
+    allowBaselineLevelSeccompTypes: "true"
+    allowBaselineLevelCapabilities: "true"
 spec:
   selector:
     matchLabels:
@@ -90,10 +73,4 @@ spec:
       containers:
         - name: nginx
           image: nginx:1.14.2
-```
-
-```sh
-$ conftest test example/allowed.yaml
-
-17 tests, 17 passed, 0 warnings, 0 failures, 0 exceptions
 ```
