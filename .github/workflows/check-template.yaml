@@ -12,7 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          curl -fsSLo konstraint https://github.com/plexsystems/konstraint/releases/download/v0.24.0/konstraint-linux-amd64
-          chmod +x konstraint
-          ./konstraint create . -o k8s
+          ./script/konstraint.sh create . -o k8s
           git diff --quiet
