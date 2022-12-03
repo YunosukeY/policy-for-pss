@@ -34,7 +34,7 @@ test_deny_disallowed_volume_types if {
 			},
 		}]},
 	}
-	deny_disallowed_volume_types == {"volume git-volume in Pod/myapp-pod has disallowed volume type"} with input as pod
+	deny_disallowed_volume_types == {"restricted level: volume git-volume in Pod/myapp-pod has disallowed volume type"} with input as pod
 }
 
 test_deny_disallowed_volume_types if {

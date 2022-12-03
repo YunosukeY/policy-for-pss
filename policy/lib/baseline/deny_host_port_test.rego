@@ -23,7 +23,7 @@ test_deny_host_port if {
 			],
 		}]},
 	}
-	deny_host_port == {"containerPort 8080 in container myapp in Pod/myapp-pod uses hostPort"} with input as pod
+	deny_host_port == {"baseline level: containerPort 8080 in container myapp in Pod/myapp-pod uses hostPort"} with input as pod
 }
 
 test_deny_host_port if {

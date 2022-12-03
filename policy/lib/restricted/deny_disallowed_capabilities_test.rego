@@ -45,8 +45,8 @@ test_deny_too_many_capabilities if {
 		]},
 	}
 	deny_disallowed_capabilities == {
-		"container not-dropped-myapp in Pod/myapp-pod doesn't drop \"ALL\" capability",
-		"container disallowed-capability-myapp in Pod/myapp-pod has disallowed capabilities",
+		"restricted level: container not-dropped-myapp in Pod/myapp-pod doesn't drop \"ALL\" capability",
+		"restricted level: container disallowed-capability-myapp in Pod/myapp-pod has disallowed capabilities",
 	} with input as pod
 }
 

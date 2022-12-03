@@ -27,8 +27,8 @@ test_deny_privilege_escalation if {
 		]},
 	}
 	deny_privilege_escalation == {
-		"container myapp in Pod/myapp-pod allows privilege escalation",
-		"container allowed-myapp in Pod/myapp-pod allows privilege escalation",
+		"restricted level: container myapp in Pod/myapp-pod allows privilege escalation",
+		"restricted level: container allowed-myapp in Pod/myapp-pod allows privilege escalation",
 	} with input as pod
 }
 

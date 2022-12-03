@@ -14,7 +14,7 @@ test_deny_host_path if {
 			},
 		}]},
 	}
-	deny_host_path == {"volume test-volume in Pod/myapp-pod uses hostPath"} with input as pod
+	deny_host_path == {"baseline level: volume test-volume in Pod/myapp-pod uses hostPath"} with input as pod
 }
 
 test_deny_host_path if {

@@ -23,7 +23,7 @@ test_deny_disallowed_sysctls if {
 			"value": "1024",
 		}]}},
 	}
-	deny_disallowed_sysctls == {"pod in Pod/myapp-pod uses disallowed sysctl: net.core.somaxconn"} with input as pod
+	deny_disallowed_sysctls == {"baseline level: pod in Pod/myapp-pod uses disallowed sysctl: net.core.somaxconn"} with input as pod
 }
 
 test_deny_disallowed_sysctls if {

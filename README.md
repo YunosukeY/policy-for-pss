@@ -13,12 +13,12 @@ With an unsafe manifest:
 
 ```sh
 $ conftest test example/unsafe.yaml
-FAIL - example/unsafe.yaml - main - container nginx in Deployment/nginx-deployment allows privilege escalation
-FAIL - example/unsafe.yaml - main - container nginx in Deployment/nginx-deployment doesn't drop "ALL" capability
-FAIL - example/unsafe.yaml - main - container nginx in Deployment/nginx-deployment must be set seccomp profile
-FAIL - example/unsafe.yaml - main - container nginx in Deployment/nginx-deployment runs as root
-FAIL - example/unsafe.yaml - main - pod in Deployment/nginx-deployment must be set seccomp profile
-FAIL - example/unsafe.yaml - main - pod in Deployment/nginx-deployment runs as root
+FAIL - example/unsafe.yaml - main - restricted level: container nginx in Deployment/nginx-deployment allows privilege escalation
+FAIL - example/unsafe.yaml - main - restricted level: container nginx in Deployment/nginx-deployment doesn't drop "ALL" capability
+FAIL - example/unsafe.yaml - main - restricted level: container nginx in Deployment/nginx-deployment must be set seccomp profile
+FAIL - example/unsafe.yaml - main - restricted level: container nginx in Deployment/nginx-deployment runs as root
+FAIL - example/unsafe.yaml - main - restricted level: pod in Deployment/nginx-deployment must be set seccomp profile
+FAIL - example/unsafe.yaml - main - restricted level: pod in Deployment/nginx-deployment runs as root
 
 17 tests, 11 passed, 0 warnings, 6 failures, 0 exceptions
 ```

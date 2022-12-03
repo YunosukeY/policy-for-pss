@@ -26,7 +26,7 @@ test_deny_unmasked_proc_mount if {
 			},
 		]},
 	}
-	deny_unmasked_proc_mount == {"container unmasked-myapp in Pod/myapp-pod doesn't mask /proc mount"} with input as pod
+	deny_unmasked_proc_mount == {"baseline level: container unmasked-myapp in Pod/myapp-pod doesn't mask /proc mount"} with input as pod
 }
 
 test_deny_unmasked_proc_mount if {

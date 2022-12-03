@@ -25,7 +25,7 @@ test_deny_run_as_root_user if {
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"securityContext": {"runAsUser": 0}},
 	}
-	deny_run_as_root_user == {"pod in Pod/myapp-pod runs as root"} with input as pod
+	deny_run_as_root_user == {"restricted level: pod in Pod/myapp-pod runs as root"} with input as pod
 }
 
 test_deny_run_as_root_user if {
@@ -52,7 +52,7 @@ test_deny_run_as_root_user if {
 			},
 		]},
 	}
-	deny_run_as_root_user == {"container myapp3 in Pod/myapp-pod runs as root"} with input as pod
+	deny_run_as_root_user == {"restricted level: container myapp3 in Pod/myapp-pod runs as root"} with input as pod
 }
 
 test_deny_run_as_root_user if {
