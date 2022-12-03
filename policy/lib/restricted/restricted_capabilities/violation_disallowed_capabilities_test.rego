@@ -1,4 +1,4 @@
-package lib.restricted
+package lib.restricted.restricted_capabilities
 
 import future.keywords
 

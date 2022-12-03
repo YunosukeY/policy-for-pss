@@ -1,4 +1,4 @@
-package lib.restricted
+package lib.restricted.run_as_root
 
 import data.lib.k8s
 import data.lib.wrapper

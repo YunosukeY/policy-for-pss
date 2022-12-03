@@ -1,4 +1,4 @@
-package lib.restricted
+package lib.restricted.privilege_escalation
 
 import data.lib.k8s
 import data.lib.wrapper

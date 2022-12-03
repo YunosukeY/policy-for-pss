@@ -1,4 +1,4 @@
-package lib.restricted
+package lib.restricted.privilege_escalation
 
 import future.keywords
 

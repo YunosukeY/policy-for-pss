@@ -1,4 +1,4 @@
-package lib.restricted
+package lib.restricted.restricted_seccomp_types
 
 import data.lib.k8s
 import data.lib.wrapper
