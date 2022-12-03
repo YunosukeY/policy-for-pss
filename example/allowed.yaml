@@ -1,12 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: test
   name: nginx-deployment
   labels:
-    allowPrivilegeEscalation: true
-    allowRunAsRoot: true
-    allowBaselineLevelSeccompTypes: true
-    allowBaselineLevelCapabilities: true
+    allowPrivilegeEscalation: "true"
+    allowRunAsRoot: "true"
+    allowBaselineLevelSeccompTypes: "true"
+    allowBaselineLevelCapabilities: "true"
 spec:
   selector:
     matchLabels:

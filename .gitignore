@@ -1,2 +1,1 @@
-/k8s/template*.yaml
-/k8s/constraint*.yaml
+/bin/
