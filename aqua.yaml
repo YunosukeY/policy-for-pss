@@ -1,0 +1,13 @@
+---
+# aqua - Declarative CLI Version Manager
+# https://aquaproj.github.io/
+# checksum:
+#   # https://aquaproj.github.io/docs/reference/checksum/
+#   enabled: true
+#   require_checksum: true
+registries:
+- type: standard
+  ref: v3.102.0 # renovate: depName=aquaproj/aqua-registry
+packages:
+- name: open-policy-agent/opa@v0.46.1
+- name: open-policy-agent/conftest@v0.36.0
