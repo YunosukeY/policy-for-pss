@@ -1,0 +1,17 @@
+name: gator
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  gator-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          ./script/konstraint.sh create . -o k8s
+      - run: |
+          ./script/gator.sh verify ./...

@@ -1,24 +1,26 @@
 package lib.k8s
 
-test_is_pod {
+import future.keywords
+
+test_is_pod if {
 	is_pod({"kind": "Pod"})
 	not is_pod({"kind": "Deployment"})
 	not is_pod({"kind": "CrobJob"})
 }
 
-test_is_workload_resource {
+test_is_workload_resource if {
 	not is_workload_resources({"kind": "Pod"})
 	is_workload_resources({"kind": "Deployment"})
 	not is_workload_resources({"kind": "CronJob"})
 }
 
-test_is_cron_job {
+test_is_cron_job if {
 	not is_cron_job({"kind": "Pod"})
 	not is_cron_job({"kind": "Deployment"})
 	is_cron_job({"kind": "CronJob"})
 }
 
-test_pods {
+test_pods if {
 	p := {"kind": "Pod"}
 	pod(p) == p
 
@@ -35,7 +37,7 @@ test_pods {
 	pod(cronjob) == cronjob.spec.jobTemplate.spec.template
 }
 
-test_containers {
+test_containers if {
 	p1 := {
 		"kind": "Pod",
 		"spec": {
@@ -58,5 +60,5 @@ test_containers {
 			],
 		},
 	}
-	containers(p1) == array.concat(p1.spec.containers, p1.spec.initContainers)
+	containers(p1) == {c | some c in p1.spec.containers} | {c | some c in p1.spec.initContainers}
 }
