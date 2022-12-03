@@ -2,7 +2,7 @@ package lib.baseline
 
 import future.keywords
 
-test_deny_disallowed_app_armor_profile if {
+test_violation_disallowed_app_armor_profile if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -14,18 +14,18 @@ test_deny_disallowed_app_armor_profile if {
 			},
 		},
 	}
-	deny_disallowed_app_armor_profile == {"baseline level: pod in Pod/myapp-pod uses disalloed AppArmor profile \"container.apparmor.security.beta.kubernetes.io/myapp3: unconfined\""} with input as pod
+	violation_disallowed_app_armor_profile == {"baseline level: pod in Pod/myapp-pod uses disalloed AppArmor profile \"container.apparmor.security.beta.kubernetes.io/myapp3: unconfined\""} with input as pod
 }
 
-test_deny_disallowed_app_armor_profile if {
+test_violation_disallowed_app_armor_profile if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 	}
-	count(deny_disallowed_app_armor_profile) == 0 with input as pod
+	count(violation_disallowed_app_armor_profile) == 0 with input as pod
 }
 
-test_deny_disallowed_app_armor_profile if {
+test_violation_disallowed_app_armor_profile if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -34,5 +34,5 @@ test_deny_disallowed_app_armor_profile if {
 			"annotations": {"container.apparmor.security.beta.kubernetes.io/myapp3": "unconfined"},
 		},
 	}
-	count(deny_disallowed_app_armor_profile) == 0 with input as pod
+	count(violation_disallowed_app_armor_profile) == 0 with input as pod
 }

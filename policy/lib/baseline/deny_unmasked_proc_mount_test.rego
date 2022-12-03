@@ -2,7 +2,7 @@ package lib.baseline
 
 import future.keywords
 
-test_deny_unmasked_proc_mount if {
+test_violation_unmasked_proc_mount if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -26,10 +26,10 @@ test_deny_unmasked_proc_mount if {
 			},
 		]},
 	}
-	deny_unmasked_proc_mount == {"baseline level: container unmasked-myapp in Pod/myapp-pod doesn't mask /proc mount"} with input as pod
+	violation_unmasked_proc_mount == {"baseline level: container unmasked-myapp in Pod/myapp-pod doesn't mask /proc mount"} with input as pod
 }
 
-test_deny_unmasked_proc_mount if {
+test_violation_unmasked_proc_mount if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -43,5 +43,5 @@ test_deny_unmasked_proc_mount if {
 			"securityContext": {"procMount": "Unmasked"},
 		}]},
 	}
-	count(deny_unmasked_proc_mount) == 0 with input as pod
+	count(violation_unmasked_proc_mount) == 0 with input as pod
 }

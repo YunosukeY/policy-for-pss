@@ -3,7 +3,7 @@ package lib.baseline
 import data.lib.k8s
 import future.keywords
 
-deny_host_port contains msg if {
+violation_host_port contains msg if {
 	not input.metadata.labels.allowHostPort
 	some container in k8s.containers(input)
 	some port in container.ports

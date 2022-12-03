@@ -8,7 +8,7 @@ allowed_seccomp_type := {
 	"Localhost",
 }
 
-deny_disallowed_seccomp_types contains msg if {
+violation_disallowed_seccomp_types contains msg if {
 	not input.metadata.labels.allowPrivilegedLevelSeccompTypes
 	pod := k8s.pod(input)
 	type := pod.spec.securityContext.seccompProfile.type
@@ -16,7 +16,7 @@ deny_disallowed_seccomp_types contains msg if {
 	msg := sprintf("baseline level: pod in %s/%s uses disallowed seccompProfile type: %s", [input.kind, input.metadata.name, type])
 }
 
-deny_disallowed_seccomp_types contains msg if {
+violation_disallowed_seccomp_types contains msg if {
 	not input.metadata.labels.allowPrivilegedLevelSeccompTypes
 	some container in k8s.containers(input)
 	type := container.securityContext.seccompProfile.type

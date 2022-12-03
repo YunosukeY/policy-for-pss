@@ -2,7 +2,7 @@ package lib.baseline
 
 import future.keywords
 
-test_deny_host_path if {
+test_violation_host_path if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -14,19 +14,19 @@ test_deny_host_path if {
 			},
 		}]},
 	}
-	deny_host_path == {"baseline level: volume test-volume in Pod/myapp-pod uses hostPath"} with input as pod
+	violation_host_path == {"baseline level: volume test-volume in Pod/myapp-pod uses hostPath"} with input as pod
 }
 
-test_deny_host_path if {
+test_violation_host_path if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"volumes": []},
 	}
-	count(deny_host_path) == 0 with input as pod
+	count(violation_host_path) == 0 with input as pod
 }
 
-test_deny_host_path if {
+test_violation_host_path if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -35,10 +35,10 @@ test_deny_host_path if {
 			"emptyDir": {},
 		}]},
 	}
-	count(deny_host_path) == 0 with input as pod
+	count(violation_host_path) == 0 with input as pod
 }
 
-test_deny_host_path if {
+test_violation_host_path if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -53,5 +53,5 @@ test_deny_host_path if {
 			},
 		}]},
 	}
-	count(deny_host_path) == 0 with input as pod
+	count(violation_host_path) == 0 with input as pod
 }

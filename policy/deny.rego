@@ -6,72 +6,72 @@ import future.keywords
 
 # Baseline
 
-deny contains msg if {
-	some msg in baseline.deny_host_process
+violation contains msg if {
+	some msg in baseline.violation_host_process
 }
 
-deny contains msg if {
-	some msg in baseline.deny_host_namespaces
+violation contains msg if {
+	some msg in baseline.violation_host_namespaces
 }
 
-deny contains msg if {
-	some msg in baseline.deny_privileged
+violation contains msg if {
+	some msg in baseline.violation_privileged
 }
 
-deny contains msg if {
-	some msg in baseline.deny_disallowed_capabilities
+violation contains msg if {
+	some msg in baseline.violation_disallowed_capabilities
 }
 
-deny contains msg if {
-	some msg in baseline.deny_host_path
+violation contains msg if {
+	some msg in baseline.violation_host_path
 }
 
-deny contains msg if {
-	some msg in baseline.deny_host_port
+violation contains msg if {
+	some msg in baseline.violation_host_port
 }
 
-deny contains msg if {
-	some msg in baseline.deny_disallowed_app_armor_profile
+violation contains msg if {
+	some msg in baseline.violation_disallowed_app_armor_profile
 }
 
-deny contains msg if {
-	some msg in baseline.deny_disallowed_selinux_options
+violation contains msg if {
+	some msg in baseline.violation_disallowed_selinux_options
 }
 
-deny contains msg if {
-	some msg in baseline.deny_unmasked_proc_mount
+violation contains msg if {
+	some msg in baseline.violation_unmasked_proc_mount
 }
 
-deny contains msg if {
-	some msg in baseline.deny_disallowed_seccomp_types
+violation contains msg if {
+	some msg in baseline.violation_disallowed_seccomp_types
 }
 
-deny contains msg if {
-	some msg in baseline.deny_disallowed_sysctls
+violation contains msg if {
+	some msg in baseline.violation_disallowed_sysctls
 }
 
 # Restricted
 
-deny contains msg if {
-	some msg in restricted.deny_disallowed_volume_types
+violation contains msg if {
+	some msg in restricted.violation_disallowed_volume_types
 }
 
-deny contains msg if {
-	some msg in restricted.deny_privilege_escalation
+violation contains msg if {
+	some msg in restricted.violation_privilege_escalation
 }
 
-deny contains msg if {
-	some msg in restricted.deny_run_as_root
+violation contains msg if {
+	some msg in restricted.violation_run_as_root
 }
 
-deny contains msg if {
-	some msg in restricted.deny_run_as_root_user
+violation contains msg if {
+	some msg in restricted.violation_run_as_root_user
 }
 
-deny contains msg if {
-	some msg in restricted.deny_disallowed_seccomp_types
+violation contains msg if {
+	some msg in restricted.violation_disallowed_seccomp_types
 }
 
-deny contains msg if {
-	some msg in restricted.deny_disallowed_capabilities
+violation contains msg if {
+	some msg in restricted.violation_disallowed_capabilities
 }

@@ -2,7 +2,7 @@ package lib.baseline
 
 import future.keywords
 
-test_deny_host_port if {
+test_violation_host_port if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -23,10 +23,10 @@ test_deny_host_port if {
 			],
 		}]},
 	}
-	deny_host_port == {"baseline level: containerPort 8080 in container myapp in Pod/myapp-pod uses hostPort"} with input as pod
+	violation_host_port == {"baseline level: containerPort 8080 in container myapp in Pod/myapp-pod uses hostPort"} with input as pod
 }
 
-test_deny_host_port if {
+test_violation_host_port if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -43,5 +43,5 @@ test_deny_host_port if {
 			}],
 		}]},
 	}
-	count(deny_host_port) == 0 with input as pod
+	count(violation_host_port) == 0 with input as pod
 }

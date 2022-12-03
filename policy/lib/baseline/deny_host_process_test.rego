@@ -2,7 +2,7 @@ package lib.baseline
 
 import future.keywords
 
-test_deny_host_process if {
+test_violation_host_process if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -23,13 +23,13 @@ test_deny_host_process if {
 			],
 		},
 	}
-	deny_host_process == {
+	violation_host_process == {
 		"baseline level: pod in Pod/myapp-pod uses hostProcess",
 		"baseline level: container myapp-with-hostProcess in Pod/myapp-pod uses hostProcess",
 	} with input as pod
 }
 
-test_deny_host_process if {
+test_violation_host_process if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -46,5 +46,5 @@ test_deny_host_process if {
 			}],
 		},
 	}
-	count(deny_host_process) == 0 with input as pod
+	count(violation_host_process) == 0 with input as pod
 }

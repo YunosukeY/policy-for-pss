@@ -19,7 +19,7 @@ allowed_capabilities := {
 	"SYS_CHROOT",
 }
 
-deny_disallowed_capabilities contains msg if {
+violation_disallowed_capabilities contains msg if {
 	not input.metadata.labels.allowPrivilegedLevelCapabilities
 	some container in k8s.containers(input)
 	some c in container.securityContext.capabilities.add

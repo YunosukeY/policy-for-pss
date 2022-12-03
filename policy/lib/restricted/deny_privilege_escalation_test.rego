@@ -2,7 +2,7 @@ package lib.restricted
 
 import future.keywords
 
-test_deny_privilege_escalation if {
+test_violation_privilege_escalation if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -26,13 +26,13 @@ test_deny_privilege_escalation if {
 			},
 		]},
 	}
-	deny_privilege_escalation == {
+	violation_privilege_escalation == {
 		"restricted level: container myapp in Pod/myapp-pod allows privilege escalation",
 		"restricted level: container allowed-myapp in Pod/myapp-pod allows privilege escalation",
 	} with input as pod
 }
 
-test_deny_privilege_escalation if {
+test_violation_privilege_escalation if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -45,10 +45,10 @@ test_deny_privilege_escalation if {
 			}],
 		},
 	}
-	count(deny_privilege_escalation) == 0 with input as pod
+	count(violation_privilege_escalation) == 0 with input as pod
 }
 
-test_deny_privilege_escalation if {
+test_violation_privilege_escalation if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -62,5 +62,5 @@ test_deny_privilege_escalation if {
 			"securityContext": {"allowPrivilegeEscalation": true},
 		}]},
 	}
-	count(deny_privilege_escalation) == 0 with input as pod
+	count(violation_privilege_escalation) == 0 with input as pod
 }

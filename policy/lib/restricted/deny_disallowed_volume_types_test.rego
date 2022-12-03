@@ -2,15 +2,15 @@ package lib.restricted
 
 import future.keywords
 
-test_deny_disallowed_volume_types if {
+test_violation_disallowed_volume_types if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 	}
-	count(deny_disallowed_volume_types) == 0 with input as pod
+	count(violation_disallowed_volume_types) == 0 with input as pod
 }
 
-test_deny_disallowed_volume_types if {
+test_violation_disallowed_volume_types if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -19,10 +19,10 @@ test_deny_disallowed_volume_types if {
 			"emptyDir": {},
 		}]},
 	}
-	count(deny_disallowed_volume_types) == 0 with input as pod
+	count(violation_disallowed_volume_types) == 0 with input as pod
 }
 
-test_deny_disallowed_volume_types if {
+test_violation_disallowed_volume_types if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -34,10 +34,10 @@ test_deny_disallowed_volume_types if {
 			},
 		}]},
 	}
-	deny_disallowed_volume_types == {"restricted level: volume git-volume in Pod/myapp-pod has disallowed volume type"} with input as pod
+	violation_disallowed_volume_types == {"restricted level: volume git-volume in Pod/myapp-pod has disallowed volume type"} with input as pod
 }
 
-test_deny_disallowed_volume_types if {
+test_violation_disallowed_volume_types if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -52,5 +52,5 @@ test_deny_disallowed_volume_types if {
 			},
 		}]},
 	}
-	count(deny_disallowed_volume_types) == 0 with input as pod
+	count(violation_disallowed_volume_types) == 0 with input as pod
 }

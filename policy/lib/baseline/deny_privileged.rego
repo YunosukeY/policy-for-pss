@@ -3,7 +3,7 @@ package lib.baseline
 import data.lib.k8s
 import future.keywords
 
-deny_privileged contains msg if {
+violation_privileged contains msg if {
 	not input.metadata.labels.allowPrivileged
 	some container in k8s.containers(input)
 	container.securityContext.privileged

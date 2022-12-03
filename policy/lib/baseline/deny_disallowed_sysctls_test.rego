@@ -2,7 +2,7 @@ package lib.baseline
 
 import future.keywords
 
-test_deny_disallowed_sysctls if {
+test_violation_disallowed_sysctls if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -11,10 +11,10 @@ test_deny_disallowed_sysctls if {
 			"value": "0",
 		}]}},
 	}
-	count(deny_disallowed_sysctls) == 0 with input as pod
+	count(violation_disallowed_sysctls) == 0 with input as pod
 }
 
-test_deny_disallowed_sysctls if {
+test_violation_disallowed_sysctls if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -23,18 +23,18 @@ test_deny_disallowed_sysctls if {
 			"value": "1024",
 		}]}},
 	}
-	deny_disallowed_sysctls == {"baseline level: pod in Pod/myapp-pod uses disallowed sysctl: net.core.somaxconn"} with input as pod
+	violation_disallowed_sysctls == {"baseline level: pod in Pod/myapp-pod uses disallowed sysctl: net.core.somaxconn"} with input as pod
 }
 
-test_deny_disallowed_sysctls if {
+test_violation_disallowed_sysctls if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 	}
-	count(deny_disallowed_sysctls) == 0 with input as pod
+	count(violation_disallowed_sysctls) == 0 with input as pod
 }
 
-test_deny_disallowed_sysctls if {
+test_violation_disallowed_sysctls if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -46,5 +46,5 @@ test_deny_disallowed_sysctls if {
 			"value": "1024",
 		}]}},
 	}
-	count(deny_disallowed_sysctls) == 0 with input as pod
+	count(violation_disallowed_sysctls) == 0 with input as pod
 }

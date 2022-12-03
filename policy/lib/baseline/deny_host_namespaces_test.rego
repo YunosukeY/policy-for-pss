@@ -2,28 +2,28 @@ package lib.baseline
 
 import future.keywords
 
-test_deny_host_namespaces if {
+test_violation_host_namespaces if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 	}
-	count(deny_host_namespaces) == 0 with input as pod
+	count(violation_host_namespaces) == 0 with input as pod
 }
 
-test_deny_host_namespaces if {
+test_violation_host_namespaces if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"hostNetwork": true, "hostPID": true, "hostIPC": true},
 	}
-	deny_host_namespaces == {
+	violation_host_namespaces == {
 		"baseline level: pod in Pod/myapp-pod uses hostNetWork",
 		"baseline level: pod in Pod/myapp-pod uses hostPID",
 		"baseline level: pod in Pod/myapp-pod uses hostIPC",
 	} with input as pod
 }
 
-test_deny_host_namespaces if {
+test_violation_host_namespaces if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -32,5 +32,5 @@ test_deny_host_namespaces if {
 		},
 		"spec": {"hostNetwork": true, "hostPID": true, "hostIPC": true},
 	}
-	count(deny_host_namespaces) == 0 with input as pod
+	count(violation_host_namespaces) == 0 with input as pod
 }

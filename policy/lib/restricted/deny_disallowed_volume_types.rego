@@ -3,7 +3,7 @@ package lib.restricted
 import data.lib.k8s
 import future.keywords
 
-deny_disallowed_volume_types contains msg if {
+violation_disallowed_volume_types contains msg if {
 	not input.metadata.labels.allowAllVolumeTypes
 
 	pod := k8s.pod(input)

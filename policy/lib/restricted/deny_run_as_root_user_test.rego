@@ -2,33 +2,33 @@ package lib.restricted
 
 import future.keywords
 
-test_deny_run_as_root_user if {
+test_violation_run_as_root_user if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 	}
-	count(deny_run_as_root_user) == 0 with input as pod
+	count(violation_run_as_root_user) == 0 with input as pod
 }
 
-test_deny_run_as_root_user if {
+test_violation_run_as_root_user if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"securityContext": {"runAsUser": 999}},
 	}
-	count(deny_run_as_root_user) == 0 with input as pod
+	count(violation_run_as_root_user) == 0 with input as pod
 }
 
-test_deny_run_as_root_user if {
+test_violation_run_as_root_user if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"securityContext": {"runAsUser": 0}},
 	}
-	deny_run_as_root_user == {"restricted level: pod in Pod/myapp-pod runs as root"} with input as pod
+	violation_run_as_root_user == {"restricted level: pod in Pod/myapp-pod runs as root"} with input as pod
 }
 
-test_deny_run_as_root_user if {
+test_violation_run_as_root_user if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -52,10 +52,10 @@ test_deny_run_as_root_user if {
 			},
 		]},
 	}
-	deny_run_as_root_user == {"restricted level: container myapp3 in Pod/myapp-pod runs as root"} with input as pod
+	violation_run_as_root_user == {"restricted level: container myapp3 in Pod/myapp-pod runs as root"} with input as pod
 }
 
-test_deny_run_as_root_user if {
+test_violation_run_as_root_user if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -72,5 +72,5 @@ test_deny_run_as_root_user if {
 			}],
 		},
 	}
-	count(deny_run_as_root_user) == 0 with input as pod
+	count(violation_run_as_root_user) == 0 with input as pod
 }

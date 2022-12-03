@@ -2,7 +2,7 @@ package lib.baseline
 
 import future.keywords
 
-test_deny_disallowed_selinux_options if {
+test_violation_disallowed_selinux_options if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -16,7 +16,7 @@ test_deny_disallowed_selinux_options if {
 			}],
 		},
 	}
-	deny_disallowed_selinux_options == {
+	violation_disallowed_selinux_options == {
 		"baseline level: pod in Pod/myapp-pod uses disallowed SELinux option type: foo",
 		"baseline level: container myapp in Pod/myapp-pod uses disallowed SELinux option type: foo",
 		"baseline level: pod in Pod/myapp-pod uses disallowed SELinux option user: bar",
@@ -26,7 +26,7 @@ test_deny_disallowed_selinux_options if {
 	} with input as pod
 }
 
-test_deny_disallowed_selinux_options if {
+test_violation_disallowed_selinux_options if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -40,10 +40,10 @@ test_deny_disallowed_selinux_options if {
 			}],
 		},
 	}
-	count(deny_disallowed_selinux_options) == 0 with input as pod
+	count(violation_disallowed_selinux_options) == 0 with input as pod
 }
 
-test_deny_disallowed_selinux_options if {
+test_violation_disallowed_selinux_options if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -53,10 +53,10 @@ test_deny_disallowed_selinux_options if {
 			"command": ["sh", "-c", "echo The app is running! && sleep 3600"],
 		}]},
 	}
-	count(deny_disallowed_selinux_options) == 0 with input as pod
+	count(violation_disallowed_selinux_options) == 0 with input as pod
 }
 
-test_deny_disallowed_selinux_options if {
+test_violation_disallowed_selinux_options if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -73,5 +73,5 @@ test_deny_disallowed_selinux_options if {
 			}],
 		},
 	}
-	count(deny_disallowed_selinux_options) == 0 with input as pod
+	count(violation_disallowed_selinux_options) == 0 with input as pod
 }

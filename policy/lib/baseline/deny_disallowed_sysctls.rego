@@ -11,7 +11,7 @@ allowed_name := {
 	"net.ipv4.ping_group_range",
 }
 
-deny_disallowed_sysctls contains msg if {
+violation_disallowed_sysctls contains msg if {
 	not input.metadata.labels.allowAllSysctls
 	pod := k8s.pod(input)
 	some sysctl in pod.spec.securityContext.sysctls

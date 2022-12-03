@@ -8,7 +8,7 @@ allowed_seccomp_type := {
 	"Localhost",
 }
 
-deny_disallowed_seccomp_types contains msg if {
+violation_disallowed_seccomp_types contains msg if {
 	not input.metadata.labels.allowBaselineLevelSeccompTypes
 
 	pod := k8s.pod(input)
@@ -19,7 +19,7 @@ deny_disallowed_seccomp_types contains msg if {
 	msg := sprintf("restricted level: pod in %s/%s uses disallowed seccompProfile type: %s", [input.kind, input.metadata.name, type])
 }
 
-deny_disallowed_seccomp_types contains msg if {
+violation_disallowed_seccomp_types contains msg if {
 	not input.metadata.labels.allowBaselineLevelSeccompTypes
 
 	pod := k8s.pod(input)
@@ -31,7 +31,7 @@ deny_disallowed_seccomp_types contains msg if {
 	msg := sprintf("restricted level: container %s in %s/%s uses disallowed seccompProfile type: %s", [container.name, input.kind, input.metadata.name, type])
 }
 
-deny_disallowed_seccomp_types contains msg if {
+violation_disallowed_seccomp_types contains msg if {
 	not input.metadata.labels.allowBaselineLevelSeccompTypes
 
 	pod := k8s.pod(input)
@@ -41,7 +41,7 @@ deny_disallowed_seccomp_types contains msg if {
 	msg := sprintf("restricted level: pod in %s/%s must be set seccomp profile", [input.kind, input.metadata.name])
 }
 
-deny_disallowed_seccomp_types contains msg if {
+violation_disallowed_seccomp_types contains msg if {
 	not input.metadata.labels.allowBaselineLevelSeccompTypes
 
 	pod := k8s.pod(input)

@@ -2,7 +2,7 @@ package lib.restricted
 
 import future.keywords
 
-test_deny_too_many_capabilities if {
+test_violation_too_many_capabilities if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -44,13 +44,13 @@ test_deny_too_many_capabilities if {
 			},
 		]},
 	}
-	deny_disallowed_capabilities == {
+	violation_disallowed_capabilities == {
 		"restricted level: container not-dropped-myapp in Pod/myapp-pod doesn't drop \"ALL\" capability",
 		"restricted level: container disallowed-capability-myapp in Pod/myapp-pod has disallowed capabilities",
 	} with input as pod
 }
 
-test_deny_too_many_capabilities if {
+test_violation_too_many_capabilities if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -71,5 +71,5 @@ test_deny_too_many_capabilities if {
 			},
 		]},
 	}
-	count(deny_disallowed_capabilities) == 0 with input as pod
+	count(violation_disallowed_capabilities) == 0 with input as pod
 }

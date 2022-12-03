@@ -2,7 +2,7 @@ package lib.restricted
 
 import future.keywords
 
-test_deny_run_as_root if {
+test_violation_run_as_root if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -26,32 +26,32 @@ test_deny_run_as_root if {
 			},
 		]},
 	}
-	deny_run_as_root == {
+	violation_run_as_root == {
 		"restricted level: pod in Pod/myapp-pod runs as root",
 		"restricted level: container myapp in Pod/myapp-pod runs as root",
 		"restricted level: container root-myapp in Pod/myapp-pod runs as root",
 	} with input as pod
 }
 
-test_deny_run_as_root if {
+test_violation_run_as_root if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"securityContext": {"runAsNonRoot": true}},
 	}
-	count(deny_run_as_root) == 0 with input as pod
+	count(violation_run_as_root) == 0 with input as pod
 }
 
-test_deny_run_as_root if {
+test_violation_run_as_root if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 		"spec": {"securityContext": {"runAsNonRoot": false}},
 	}
-	deny_run_as_root == {"restricted level: pod in Pod/myapp-pod runs as root"} with input as pod
+	violation_run_as_root == {"restricted level: pod in Pod/myapp-pod runs as root"} with input as pod
 }
 
-test_deny_run_as_root if {
+test_violation_run_as_root if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -68,5 +68,5 @@ test_deny_run_as_root if {
 			}],
 		},
 	}
-	count(deny_run_as_root) == 0 with input as pod
+	count(violation_run_as_root) == 0 with input as pod
 }

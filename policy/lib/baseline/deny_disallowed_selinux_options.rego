@@ -10,7 +10,7 @@ allowed_type := {
 	"container_kvm_t",
 }
 
-deny_disallowed_selinux_options contains msg if {
+violation_disallowed_selinux_options contains msg if {
 	not input.metadata.labels.allowAllSeLinuxOptions
 	pod := k8s.pod(input)
 	type := pod.spec.securityContext.seLinuxOptions.type
@@ -18,7 +18,7 @@ deny_disallowed_selinux_options contains msg if {
 	msg := sprintf("baseline level: pod in %s/%s uses disallowed SELinux option type: %s", [input.kind, input.metadata.name, type])
 }
 
-deny_disallowed_selinux_options contains msg if {
+violation_disallowed_selinux_options contains msg if {
 	not input.metadata.labels.allowAllSeLinuxOptions
 	some container in k8s.containers(input)
 	type := container.securityContext.seLinuxOptions.type
@@ -26,7 +26,7 @@ deny_disallowed_selinux_options contains msg if {
 	msg := sprintf("baseline level: container %s in %s/%s uses disallowed SELinux option type: %s", [container.name, input.kind, input.metadata.name, type])
 }
 
-deny_disallowed_selinux_options contains msg if {
+violation_disallowed_selinux_options contains msg if {
 	not input.metadata.labels.allowAllSeLinuxOptions
 	pod := k8s.pod(input)
 	user := pod.spec.securityContext.seLinuxOptions.user
@@ -34,7 +34,7 @@ deny_disallowed_selinux_options contains msg if {
 	msg := sprintf("baseline level: pod in %s/%s uses disallowed SELinux option user: %s", [input.kind, input.metadata.name, user])
 }
 
-deny_disallowed_selinux_options contains msg if {
+violation_disallowed_selinux_options contains msg if {
 	not input.metadata.labels.allowAllSeLinuxOptions
 	some container in k8s.containers(input)
 	user := container.securityContext.seLinuxOptions.user
@@ -42,7 +42,7 @@ deny_disallowed_selinux_options contains msg if {
 	msg := sprintf("baseline level: container %s in %s/%s uses disallowed SELinux option user: %s", [container.name, input.kind, input.metadata.name, user])
 }
 
-deny_disallowed_selinux_options contains msg if {
+violation_disallowed_selinux_options contains msg if {
 	not input.metadata.labels.allowAllSeLinuxOptions
 	pod := k8s.pod(input)
 	role := pod.spec.securityContext.seLinuxOptions.role
@@ -50,7 +50,7 @@ deny_disallowed_selinux_options contains msg if {
 	msg := sprintf("baseline level: pod in %s/%s uses disallowed SELinux option role: %s", [input.kind, input.metadata.name, role])
 }
 
-deny_disallowed_selinux_options contains msg if {
+violation_disallowed_selinux_options contains msg if {
 	not input.metadata.labels.allowAllSeLinuxOptions
 	some container in k8s.containers(input)
 	role := container.securityContext.seLinuxOptions.role

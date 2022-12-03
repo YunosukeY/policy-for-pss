@@ -2,7 +2,7 @@ package lib.baseline
 
 import future.keywords
 
-test_deny_privileged if {
+test_violation_privileged if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -20,10 +20,10 @@ test_deny_privileged if {
 			},
 		]},
 	}
-	deny_privileged == {"baseline level: container privileged-myapp in Pod/myapp-pod is privileged"} with input as pod
+	violation_privileged == {"baseline level: container privileged-myapp in Pod/myapp-pod is privileged"} with input as pod
 }
 
-test_deny_privileged if {
+test_violation_privileged if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -37,5 +37,5 @@ test_deny_privileged if {
 			"securityContext": {"privileged": true},
 		}]},
 	}
-	count(deny_privileged) == 0 with input as pod
+	count(violation_privileged) == 0 with input as pod
 }

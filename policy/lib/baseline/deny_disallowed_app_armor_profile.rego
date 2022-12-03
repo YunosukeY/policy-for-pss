@@ -11,7 +11,7 @@ allowed_profile(profile) if {
 	startswith(profile, "localhost/")
 }
 
-deny_disallowed_app_armor_profile contains msg if {
+violation_disallowed_app_armor_profile contains msg if {
 	not input.metadata.labels.allowAllAppArmorProfile
 
 	pod := k8s.pod(input)

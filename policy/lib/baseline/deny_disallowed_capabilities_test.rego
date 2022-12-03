@@ -2,7 +2,7 @@ package lib.baseline
 
 import future.keywords
 
-test_deny_too_many_capabilities if {
+test_violation_too_many_capabilities if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
@@ -32,13 +32,13 @@ test_deny_too_many_capabilities if {
 			},
 		]},
 	}
-	deny_disallowed_capabilities == {
+	violation_disallowed_capabilities == {
 		"baseline level: container expanded-myapp in Pod/myapp-pod has disallowed capabilities",
 		"baseline level: container expanded-myapp2 in Pod/myapp-pod has disallowed capabilities",
 	} with input as pod
 }
 
-test_deny_too_many_capabilities if {
+test_violation_too_many_capabilities if {
 	pod := {
 		"kind": "Pod",
 		"metadata": {
@@ -60,5 +60,5 @@ test_deny_too_many_capabilities if {
 			},
 		]},
 	}
-	count(deny_disallowed_capabilities) == 0 with input as pod
+	count(violation_disallowed_capabilities) == 0 with input as pod
 }
