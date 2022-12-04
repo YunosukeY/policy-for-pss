@@ -6,10 +6,11 @@ import future.keywords
 
 violation_disallowed_volume_types contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowAllVolumeTypes
+	not pod.metadata.labels.allowAllVolumeTypes
 
-	pod := k8s.pod(resource)
 	some volume in pod.spec.volumes
 	not volume.configMap
 	not volume.csi

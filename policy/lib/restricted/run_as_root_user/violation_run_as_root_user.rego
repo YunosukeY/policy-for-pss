@@ -6,10 +6,11 @@ import future.keywords
 
 violation_run_as_root_user contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowRunAsRootUser
+	not pod.metadata.labels.allowRunAsRootUser
 
-	pod := k8s.pod(resource)
 	pod.spec.securityContext.runAsUser == 0
 
 	msg := wrapper.format("restricted level: pod in %s/%s runs as root", [resource.kind, resource.metadata.name])
@@ -17,8 +18,10 @@ violation_run_as_root_user contains msg if {
 
 violation_run_as_root_user contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowRunAsRootUser
+	not pod.metadata.labels.allowRunAsRootUser
 
 	some container in k8s.containers(resource)
 	container.securityContext.runAsUser == 0

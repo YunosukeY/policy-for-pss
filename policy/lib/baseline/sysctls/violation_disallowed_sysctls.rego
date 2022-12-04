@@ -14,10 +14,11 @@ allowed_name := {
 
 violation_disallowed_sysctls contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowAllSysctls
+	not pod.metadata.labels.allowAllSysctls
 
-	pod := k8s.pod(resource)
 	some sysctl in pod.spec.securityContext.sysctls
 	not sysctl.name in allowed_name
 

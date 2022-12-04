@@ -14,10 +14,11 @@ allowed_profile(profile) if {
 
 violation_disallowed_app_armor_profile contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowAllAppArmorProfile
+	not pod.metadata.labels.allowAllAppArmorProfile
 
-	pod := k8s.pod(resource)
 	some name
 	value := pod.metadata.annotations[name]
 	startswith(name, "container.apparmor.security.beta.kubernetes.io/")

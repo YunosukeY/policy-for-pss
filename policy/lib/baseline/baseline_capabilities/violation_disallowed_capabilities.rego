@@ -22,8 +22,10 @@ allowed_capabilities := {
 
 violation_disallowed_capabilities contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowPrivilegedLevelCapabilities
+	not pod.metadata.labels.allowPrivilegedLevelCapabilities
 
 	some container in k8s.containers(resource)
 	some c in container.securityContext.capabilities.add

@@ -6,8 +6,10 @@ import future.keywords
 
 violation_privileged contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowPrivileged
+	not pod.metadata.labels.allowPrivileged
 
 	some container in k8s.containers(resource)
 	container.securityContext.privileged

@@ -6,10 +6,11 @@ import future.keywords
 
 violation_host_process contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowHostProcess
+	not pod.metadata.labels.allowHostProcess
 
-	pod := k8s.pod(resource)
 	pod.spec.securityContext.windowsOptions.hostProcess
 
 	msg := wrapper.format("baseline level: pod in %s/%s uses hostProcess", [resource.kind, resource.metadata.name])
@@ -17,8 +18,10 @@ violation_host_process contains msg if {
 
 violation_host_process contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowHostProcess
+	not pod.metadata.labels.allowHostProcess
 
 	some container in k8s.containers(resource)
 	container.securityContext.windowsOptions.hostProcess

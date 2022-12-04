@@ -6,8 +6,10 @@ import future.keywords
 
 violation_host_port contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowHostPort
+	not pod.metadata.labels.allowHostPort
 
 	some container in k8s.containers(resource)
 	some port in container.ports
