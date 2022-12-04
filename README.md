@@ -12,7 +12,7 @@ It also corresponds to Gatekeeper policy.
 For Conftest:
 
 ```sh
-$ conftest test --update https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/policy/pss.rego <file-to-test>
+$ conftest test --update https://github.com/YunosukeY/policies-for-pss/raw/master/bundle.tar.gz <file-to-test>
 ```
 
 For Gatekeeper:
