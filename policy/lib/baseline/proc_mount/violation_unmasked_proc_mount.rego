@@ -6,8 +6,10 @@ import future.keywords
 
 violation_unmasked_proc_mount contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowUnmaskedProcMount
+	not pod.metadata.labels.allowUnmaskedProcMount
 
 	some container in k8s.containers(resource)
 	container.securityContext.procMount != "Default"

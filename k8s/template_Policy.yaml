@@ -27,10 +27,11 @@ spec:
 
       violation_disallowed_app_armor_profile contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowAllAppArmorProfile
+        not pod.metadata.labels.allowAllAppArmorProfile
 
-        pod := k8s.pod(resource)
         some name
         value := pod.metadata.annotations[name]
         startswith(name, "container.apparmor.security.beta.kubernetes.io/")
@@ -141,8 +142,10 @@ spec:
 
       violation_disallowed_capabilities contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowPrivilegedLevelCapabilities
+        not pod.metadata.labels.allowPrivilegedLevelCapabilities
 
         some container in k8s.containers(resource)
         some c in container.securityContext.capabilities.add
@@ -164,10 +167,11 @@ spec:
 
       violation_disallowed_seccomp_types contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowPrivilegedLevelSeccompTypes
+        not pod.metadata.labels.allowPrivilegedLevelSeccompTypes
 
-        pod := k8s.pod(resource)
         type := pod.spec.securityContext.seccompProfile.type
         not type in allowed_seccomp_type
 
@@ -176,8 +180,10 @@ spec:
 
       violation_disallowed_seccomp_types contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowPrivilegedLevelSeccompTypes
+        not pod.metadata.labels.allowPrivilegedLevelSeccompTypes
 
         some container in k8s.containers(resource)
         type := container.securityContext.seccompProfile.type
@@ -194,10 +200,11 @@ spec:
 
       violation_host_namespaces contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowHostNamespace
+        not pod.metadata.labels.allowHostNamespace
 
-        pod := k8s.pod(resource)
         pod.spec.hostNetwork
 
         msg := wrapper.format("baseline level: pod in %s/%s uses hostNetWork", [resource.kind, resource.metadata.name])
@@ -205,10 +212,11 @@ spec:
 
       violation_host_namespaces contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowHostNamespace
+        not pod.metadata.labels.allowHostNamespace
 
-        pod := k8s.pod(resource)
         pod.spec.hostPID
 
         msg := wrapper.format("baseline level: pod in %s/%s uses hostPID", [resource.kind, resource.metadata.name])
@@ -216,10 +224,11 @@ spec:
 
       violation_host_namespaces contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowHostNamespace
+        not pod.metadata.labels.allowHostNamespace
 
-        pod := k8s.pod(resource)
         pod.spec.hostIPC
 
         msg := wrapper.format("baseline level: pod in %s/%s uses hostIPC", [resource.kind, resource.metadata.name])
@@ -233,10 +242,11 @@ spec:
 
       violation_host_path contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowHostPath
+        not pod.metadata.labels.allowHostPath
 
-        pod := k8s.pod(resource)
         some volume in pod.spec.volumes
         volume.hostPath
 
@@ -251,8 +261,10 @@ spec:
 
       violation_host_port contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowHostPort
+        not pod.metadata.labels.allowHostPort
 
         some container in k8s.containers(resource)
         some port in container.ports
@@ -269,10 +281,11 @@ spec:
 
       violation_host_process contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowHostProcess
+        not pod.metadata.labels.allowHostProcess
 
-        pod := k8s.pod(resource)
         pod.spec.securityContext.windowsOptions.hostProcess
 
         msg := wrapper.format("baseline level: pod in %s/%s uses hostProcess", [resource.kind, resource.metadata.name])
@@ -280,8 +293,10 @@ spec:
 
       violation_host_process contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowHostProcess
+        not pod.metadata.labels.allowHostProcess
 
         some container in k8s.containers(resource)
         container.securityContext.windowsOptions.hostProcess
@@ -297,8 +312,10 @@ spec:
 
       violation_privileged contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowPrivileged
+        not pod.metadata.labels.allowPrivileged
 
         some container in k8s.containers(resource)
         container.securityContext.privileged
@@ -314,8 +331,10 @@ spec:
 
       violation_unmasked_proc_mount contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowUnmaskedProcMount
+        not pod.metadata.labels.allowUnmaskedProcMount
 
         some container in k8s.containers(resource)
         container.securityContext.procMount != "Default"
@@ -338,10 +357,11 @@ spec:
 
       violation_disallowed_selinux_options contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowAllSeLinuxOptions
+        not pod.metadata.labels.allowAllSeLinuxOptions
 
-        pod := k8s.pod(resource)
         type := pod.spec.securityContext.seLinuxOptions.type
         not type in allowed_type
 
@@ -350,8 +370,10 @@ spec:
 
       violation_disallowed_selinux_options contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowAllSeLinuxOptions
+        not pod.metadata.labels.allowAllSeLinuxOptions
 
         some container in k8s.containers(resource)
         type := container.securityContext.seLinuxOptions.type
@@ -362,10 +384,11 @@ spec:
 
       violation_disallowed_selinux_options contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowAllSeLinuxOptions
+        not pod.metadata.labels.allowAllSeLinuxOptions
 
-        pod := k8s.pod(resource)
         user := pod.spec.securityContext.seLinuxOptions.user
         user != ""
 
@@ -374,8 +397,10 @@ spec:
 
       violation_disallowed_selinux_options contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowAllSeLinuxOptions
+        not pod.metadata.labels.allowAllSeLinuxOptions
 
         some container in k8s.containers(resource)
         user := container.securityContext.seLinuxOptions.user
@@ -386,10 +411,11 @@ spec:
 
       violation_disallowed_selinux_options contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowAllSeLinuxOptions
+        not pod.metadata.labels.allowAllSeLinuxOptions
 
-        pod := k8s.pod(resource)
         role := pod.spec.securityContext.seLinuxOptions.role
         role != ""
 
@@ -398,8 +424,10 @@ spec:
 
       violation_disallowed_selinux_options contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowAllSeLinuxOptions
+        not pod.metadata.labels.allowAllSeLinuxOptions
 
         some container in k8s.containers(resource)
         role := container.securityContext.seLinuxOptions.role
@@ -424,10 +452,11 @@ spec:
 
       violation_disallowed_sysctls contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowAllSysctls
+        not pod.metadata.labels.allowAllSysctls
 
-        pod := k8s.pod(resource)
         some sysctl in pod.spec.securityContext.sysctls
         not sysctl.name in allowed_name
 
@@ -442,10 +471,11 @@ spec:
 
       violation_privilege_escalation contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowPrivilegeEscalation
+        not pod.metadata.labels.allowPrivilegeEscalation
 
-        pod := k8s.pod(resource)
         not pod.spec.os.name == "windows"
 
         some container in k8s.containers(resource)
@@ -462,8 +492,10 @@ spec:
 
       violation_disallowed_capabilities contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowBaselineLevelCapabilities
+        not pod.metadata.labels.allowBaselineLevelCapabilities
 
         some container in k8s.containers(resource)
         count({c | some c in container.securityContext.capabilities.drop; c == "ALL"}) == 0
@@ -475,10 +507,11 @@ spec:
 
       violation_disallowed_capabilities contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowBaselineLevelCapabilities
+        not pod.metadata.labels.allowBaselineLevelCapabilities
 
-        pod := k8s.pod(resource)
         not pod.spec.os.name == "windows"
 
         some container in k8s.containers(resource)
@@ -501,10 +534,11 @@ spec:
 
       violation_disallowed_seccomp_types contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowBaselineLevelSeccompTypes
+        not pod.metadata.labels.allowBaselineLevelSeccompTypes
 
-        pod := k8s.pod(resource)
         not pod.spec.os.name == "windows"
 
         type := pod.spec.securityContext.seccompProfile.type
@@ -515,10 +549,11 @@ spec:
 
       violation_disallowed_seccomp_types contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowBaselineLevelSeccompTypes
+        not pod.metadata.labels.allowBaselineLevelSeccompTypes
 
-        pod := k8s.pod(resource)
         not pod.spec.os.name == "windows"
 
         some container in k8s.containers(resource)
@@ -530,10 +565,11 @@ spec:
 
       violation_disallowed_seccomp_types contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowBaselineLevelSeccompTypes
+        not pod.metadata.labels.allowBaselineLevelSeccompTypes
 
-        pod := k8s.pod(resource)
         not pod.spec.os.name == "windows"
 
         not pod.spec.securityContext.seccompProfile.type
@@ -543,10 +579,11 @@ spec:
 
       violation_disallowed_seccomp_types contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowBaselineLevelSeccompTypes
+        not pod.metadata.labels.allowBaselineLevelSeccompTypes
 
-        pod := k8s.pod(resource)
         not pod.spec.os.name == "windows"
 
         some container in k8s.containers(resource)
@@ -563,10 +600,11 @@ spec:
 
       violation_run_as_root contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowRunAsRoot
+        not pod.metadata.labels.allowRunAsRoot
 
-        pod := k8s.pod(resource)
         not pod.spec.securityContext.runAsNonRoot
 
         msg := wrapper.format("restricted level: pod in %s/%s runs as root", [resource.kind, resource.metadata.name])
@@ -574,8 +612,10 @@ spec:
 
       violation_run_as_root contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowRunAsRoot
+        not pod.metadata.labels.allowRunAsRoot
 
         some container in k8s.containers(resource)
         not container.securityContext.runAsNonRoot
@@ -591,10 +631,11 @@ spec:
 
       violation_run_as_root_user contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowRunAsRootUser
+        not pod.metadata.labels.allowRunAsRootUser
 
-        pod := k8s.pod(resource)
         pod.spec.securityContext.runAsUser == 0
 
         msg := wrapper.format("restricted level: pod in %s/%s runs as root", [resource.kind, resource.metadata.name])
@@ -602,8 +643,10 @@ spec:
 
       violation_run_as_root_user contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowRunAsRootUser
+        not pod.metadata.labels.allowRunAsRootUser
 
         some container in k8s.containers(resource)
         container.securityContext.runAsUser == 0
@@ -619,10 +662,11 @@ spec:
 
       violation_disallowed_volume_types contains msg if {
         resource := wrapper.resource(input)
+        pod := k8s.pod(resource)
 
         not resource.metadata.labels.allowAllVolumeTypes
+        not pod.metadata.labels.allowAllVolumeTypes
 
-        pod := k8s.pod(resource)
         some volume in pod.spec.volumes
         not volume.configMap
         not volume.csi

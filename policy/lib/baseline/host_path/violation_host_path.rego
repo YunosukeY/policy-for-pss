@@ -6,10 +6,11 @@ import future.keywords
 
 violation_host_path contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowHostPath
+	not pod.metadata.labels.allowHostPath
 
-	pod := k8s.pod(resource)
 	some volume in pod.spec.volumes
 	volume.hostPath
 

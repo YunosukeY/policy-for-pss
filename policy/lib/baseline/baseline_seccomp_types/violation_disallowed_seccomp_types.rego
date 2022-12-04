@@ -11,10 +11,11 @@ allowed_seccomp_type := {
 
 violation_disallowed_seccomp_types contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowPrivilegedLevelSeccompTypes
+	not pod.metadata.labels.allowPrivilegedLevelSeccompTypes
 
-	pod := k8s.pod(resource)
 	type := pod.spec.securityContext.seccompProfile.type
 	not type in allowed_seccomp_type
 
@@ -23,8 +24,10 @@ violation_disallowed_seccomp_types contains msg if {
 
 violation_disallowed_seccomp_types contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowPrivilegedLevelSeccompTypes
+	not pod.metadata.labels.allowPrivilegedLevelSeccompTypes
 
 	some container in k8s.containers(resource)
 	type := container.securityContext.seccompProfile.type

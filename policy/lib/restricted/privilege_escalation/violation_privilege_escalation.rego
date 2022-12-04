@@ -6,10 +6,11 @@ import future.keywords
 
 violation_privilege_escalation contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowPrivilegeEscalation
+	not pod.metadata.labels.allowPrivilegeEscalation
 
-	pod := k8s.pod(resource)
 	not pod.spec.os.name == "windows"
 
 	some container in k8s.containers(resource)

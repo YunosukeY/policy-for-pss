@@ -6,8 +6,10 @@ import future.keywords
 
 violation_disallowed_capabilities contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowBaselineLevelCapabilities
+	not pod.metadata.labels.allowBaselineLevelCapabilities
 
 	some container in k8s.containers(resource)
 	count({c | some c in container.securityContext.capabilities.drop; c == "ALL"}) == 0
@@ -19,10 +21,11 @@ allowed_capabilities := {"NET_BIND_SERVICE"}
 
 violation_disallowed_capabilities contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowBaselineLevelCapabilities
+	not pod.metadata.labels.allowBaselineLevelCapabilities
 
-	pod := k8s.pod(resource)
 	not pod.spec.os.name == "windows"
 
 	some container in k8s.containers(resource)

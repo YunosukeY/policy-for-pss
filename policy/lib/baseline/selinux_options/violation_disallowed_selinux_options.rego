@@ -13,10 +13,11 @@ allowed_type := {
 
 violation_disallowed_selinux_options contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowAllSeLinuxOptions
+	not pod.metadata.labels.allowAllSeLinuxOptions
 
-	pod := k8s.pod(resource)
 	type := pod.spec.securityContext.seLinuxOptions.type
 	not type in allowed_type
 
@@ -25,8 +26,10 @@ violation_disallowed_selinux_options contains msg if {
 
 violation_disallowed_selinux_options contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowAllSeLinuxOptions
+	not pod.metadata.labels.allowAllSeLinuxOptions
 
 	some container in k8s.containers(resource)
 	type := container.securityContext.seLinuxOptions.type
@@ -37,10 +40,11 @@ violation_disallowed_selinux_options contains msg if {
 
 violation_disallowed_selinux_options contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowAllSeLinuxOptions
+	not pod.metadata.labels.allowAllSeLinuxOptions
 
-	pod := k8s.pod(resource)
 	user := pod.spec.securityContext.seLinuxOptions.user
 	user != ""
 
@@ -49,8 +53,10 @@ violation_disallowed_selinux_options contains msg if {
 
 violation_disallowed_selinux_options contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowAllSeLinuxOptions
+	not pod.metadata.labels.allowAllSeLinuxOptions
 
 	some container in k8s.containers(resource)
 	user := container.securityContext.seLinuxOptions.user
@@ -61,10 +67,11 @@ violation_disallowed_selinux_options contains msg if {
 
 violation_disallowed_selinux_options contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowAllSeLinuxOptions
+	not pod.metadata.labels.allowAllSeLinuxOptions
 
-	pod := k8s.pod(resource)
 	role := pod.spec.securityContext.seLinuxOptions.role
 	role != ""
 
@@ -73,8 +80,10 @@ violation_disallowed_selinux_options contains msg if {
 
 violation_disallowed_selinux_options contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowAllSeLinuxOptions
+	not pod.metadata.labels.allowAllSeLinuxOptions
 
 	some container in k8s.containers(resource)
 	role := container.securityContext.seLinuxOptions.role

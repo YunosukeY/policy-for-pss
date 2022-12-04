@@ -11,10 +11,11 @@ allowed_seccomp_type := {
 
 violation_disallowed_seccomp_types contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowBaselineLevelSeccompTypes
+	not pod.metadata.labels.allowBaselineLevelSeccompTypes
 
-	pod := k8s.pod(resource)
 	not pod.spec.os.name == "windows"
 
 	type := pod.spec.securityContext.seccompProfile.type
@@ -25,10 +26,11 @@ violation_disallowed_seccomp_types contains msg if {
 
 violation_disallowed_seccomp_types contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowBaselineLevelSeccompTypes
+	not pod.metadata.labels.allowBaselineLevelSeccompTypes
 
-	pod := k8s.pod(resource)
 	not pod.spec.os.name == "windows"
 
 	some container in k8s.containers(resource)
@@ -40,10 +42,11 @@ violation_disallowed_seccomp_types contains msg if {
 
 violation_disallowed_seccomp_types contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowBaselineLevelSeccompTypes
+	not pod.metadata.labels.allowBaselineLevelSeccompTypes
 
-	pod := k8s.pod(resource)
 	not pod.spec.os.name == "windows"
 
 	not pod.spec.securityContext.seccompProfile.type
@@ -53,10 +56,11 @@ violation_disallowed_seccomp_types contains msg if {
 
 violation_disallowed_seccomp_types contains msg if {
 	resource := wrapper.resource(input)
+	pod := k8s.pod(resource)
 
 	not resource.metadata.labels.allowBaselineLevelSeccompTypes
+	not pod.metadata.labels.allowBaselineLevelSeccompTypes
 
-	pod := k8s.pod(resource)
 	not pod.spec.os.name == "windows"
 
 	some container in k8s.containers(resource)
