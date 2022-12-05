@@ -8,4 +8,6 @@
   kubernetes: {
     fileMatch: ["^(example|k8s)/.+\\.yaml$"],
   },
+  
+  reviewers: ["YunosukeY"],
 }
