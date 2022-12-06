@@ -12,6 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          ./script/konstraint.sh create . -o k8s
-      - run: |
           ./script/gator.sh verify ./...
