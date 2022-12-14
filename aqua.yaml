@@ -9,7 +9,7 @@ registries:
 - type: standard
   ref: v3.103.0 # renovate: depName=aquaproj/aqua-registry
 packages:
-- name: open-policy-agent/opa@v0.47.2
+- name: open-policy-agent/opa@v0.47.3
 - name: open-policy-agent/conftest@v0.36.0
 - name: kubernetes-sigs/kind@v0.17.0
 - name: helm/helm@v3.10.2
