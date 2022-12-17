@@ -11,7 +11,7 @@ jobs:
       - uses: aquaproj/aqua-installer@v1.1.2
         with:
           aqua_version: v1.25.0
-      - run: echo "COVERAGE=$(opa test policy -c | jq .coverage)" >> $GITHUB_ENV
+      - run: echo "COVERAGE=$(opa test pod-security-standards -c | jq .coverage)" >> $GITHUB_ENV
       - uses: schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
