@@ -18,8 +18,8 @@ $ conftest test --update https://github.com/YunosukeY/policies-for-pss/raw/maste
 For Gatekeeper:
 
 ```sh
-$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/k8s/template_Policy.yaml
-$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/k8s/constraint_Policy.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/k8s/template_PodSecurityStandards.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/k8s/constraint_PodSecurityStandards.yaml
 ```
 
 ## Features

@@ -11,7 +11,7 @@ jobs:
       - uses: aquaproj/aqua-installer@v1.1.2
         with:
           aqua_version: v1.25.0
-      - run: opa test policy -c > result.json
+      - run: opa test pod-security-standards -c > result.json
       - run: |
           echo "coverage: $(cat result.json | jq .coverage)%" >> comment
           cat <<EOF >> comment

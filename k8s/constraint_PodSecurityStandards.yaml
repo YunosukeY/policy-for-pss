@@ -1,4 +1,4 @@
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: Policy
+kind: PodSecurityStandards
 metadata:
-  name: policy
+  name: podsecuritystandards
