@@ -2,8 +2,8 @@ kind: Suite
 apiVersion: test.gatekeeper.sh/v1alpha1
 tests:
   - name: test-pss-policies
-    template: template_Policy.yaml
-    constraint: constraint_Policy.yaml
+    template: template_PodSecurityStandards.yaml
+    constraint: constraint_PodSecurityStandards.yaml
     cases:
       - name: unsafe
         object: "../example/unsafe.yaml"
