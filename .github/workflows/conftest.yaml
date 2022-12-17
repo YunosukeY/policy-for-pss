@@ -15,6 +15,6 @@ jobs:
         with:
           aqua_version: v1.25.0
       - run: |
-          conftest test example/safe.yaml
-          ! conftest test example/unsafe.yaml # should fail
-          conftest test example/allowed.yaml
+          conftest test example/safe.yaml -p pod-security-standards
+          ! conftest test example/unsafe.yaml -p pod-security-standards # should fail
+          conftest test example/allowed.yaml -p pod-security-standards
