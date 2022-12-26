@@ -1,8 +1,8 @@
-# Conftest Policies for Pod Security Standards
+# Conftest Policy for Pod Security Standards
 
-[![opa](https://github.com/YunosukeY/policies-for-pss/actions/workflows/opa.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/policies-for-pss/actions/workflows/opa.yaml)
+[![opa](https://github.com/YunosukeY/policy-for-pss/actions/workflows/opa.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/policy-for-pss/actions/workflows/opa.yaml)
 ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/YunosukeY/0c2e618c502912eff6e83e26b24e5c82/raw/opa-coverage-badge.json)
-[![gator](https://github.com/YunosukeY/policies-for-pss/actions/workflows/gator.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/policies-for-pss/actions/workflows/gator.yaml)
+[![gator](https://github.com/YunosukeY/policy-for-pss/actions/workflows/gator.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/policy-for-pss/actions/workflows/gator.yaml)
 
 This repository implements Pod Security Standards as Conftest policy.<br>
 It also corresponds to Gatekeeper policy.
@@ -12,14 +12,14 @@ It also corresponds to Gatekeeper policy.
 For Conftest:
 
 ```sh
-$ conftest test --update https://github.com/YunosukeY/policies-for-pss/raw/master/bundle.tar.gz <file-to-test>
+$ conftest test --update https://github.com/YunosukeY/policy-for-pss/raw/master/bundle.tar.gz <file-to-test>
 ```
 
 For Gatekeeper:
 
 ```sh
-$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/k8s/template_PodSecurityStandards.yaml
-$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policies-for-pss/master/k8s/constraint_PodSecurityStandards.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policy-for-pss/master/k8s/template_PodSecurityStandards.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policy-for-pss/master/k8s/constraint_PodSecurityStandards.yaml
 ```
 
 ## Features
