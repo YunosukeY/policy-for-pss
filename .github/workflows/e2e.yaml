@@ -13,6 +13,6 @@ jobs:
       - uses: actions/checkout@v3
       - uses: aquaproj/aqua-installer@v2.0.2
         with:
-          aqua_version: v1.31.0
+          aqua_version: v1.32.0
       - run: helm plugin install https://github.com/databus23/helm-diff
       - run: ./e2e/e2e.sh
