@@ -12,7 +12,7 @@ jobs:
         with:
           aqua_version: v2.15.0
       - run: echo "COVERAGE=$(opa test pod-security-standards -c | jq .coverage)" >> $GITHUB_ENV
-      - uses: schneegans/dynamic-badges-action@v1.6.0
+      - uses: schneegans/dynamic-badges-action@v1.7.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 0c2e618c502912eff6e83e26b24e5c82
