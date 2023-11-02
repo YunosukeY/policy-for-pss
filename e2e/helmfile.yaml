@@ -4,4 +4,4 @@ repositories:
 releases:
   - name: gatekeeper
     chart: gatekeeper/gatekeeper
-    version: 3.13.3
+    version: 3.14.0
