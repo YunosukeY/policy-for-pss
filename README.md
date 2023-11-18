@@ -12,14 +12,14 @@ It also corresponds to Gatekeeper policy.
 For Conftest:
 
 ```sh
-$ conftest test --update https://github.com/YunosukeY/policy-for-pss/raw/master/bundle.tar.gz <file-to-test>
+$ conftest test --update https://github.com/YunosukeY/policy-for-pss/raw/1.28/bundle.tar.gz <file-to-test>
 ```
 
 For Gatekeeper:
 
 ```sh
-$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policy-for-pss/master/k8s/template_PodSecurityStandards.yaml
-$ kubectl apply -f https://raw.githubusercontent.com/YunosukeY/policy-for-pss/master/k8s/constraint_PodSecurityStandards.yaml
+$ kubectl apply -f https://github.com/YunosukeY/policy-for-pss/raw/1.28/k8s/template_PodSecurityStandards.yaml
+$ kubectl apply -f https://github.com/YunosukeY/policy-for-pss/raw/1.28/k8s/constraint_PodSecurityStandards.yaml
 ```
 
 ## Features
