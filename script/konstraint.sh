@@ -2,7 +2,7 @@
 
 set -eu
 
-version="v0.24.0"
+version="v0.31.0"
 repo_dir="$(git rev-parse --show-toplevel)"
 bin="${repo_dir}/bin"
 konstraint="${bin}/konstraint"
