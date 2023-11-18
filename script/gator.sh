@@ -2,7 +2,7 @@
 
 set -eu
 
-version="v3.10.0"
+version="v3.14.0"
 repo_dir="$(git rev-parse --show-toplevel)"
 bin="${repo_dir}/bin"
 gator="${bin}/gator"
