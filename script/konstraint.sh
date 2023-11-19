@@ -2,19 +2,20 @@
 
 set -eu
 
-version="v0.31.0"
-repo_dir="$(git rev-parse --show-toplevel)"
-bin="${repo_dir}/bin"
-konstraint="${bin}/konstraint"
+# renovate: datasource=github-releases depName=plexsystems/konstraint versioning=loose
+readonly KONSTRAINT_VERSION="v0.31.0"
+readonly REPO_DIR="$(git rev-parse --show-toplevel)"
+readonly BIN="${REPO_DIR}/bin"
+readonly KONSTRAINT="${BIN}/konstraint"
 
-if [[ -x "${konstraint}" ]]; then
+if [[ -x "${KONSTRAINT}" ]]; then
   true
 else
-  mkdir -p "${bin}"
-  echo "download konstraint ${version}"
-  url="https://github.com/plexsystems/konstraint/releases/download/${version}/konstraint-linux-amd64"
-  curl -sfSL "$url" > "${konstraint}"
-  chmod +x "${konstraint}"
+  mkdir -p "${BIN}"
+  echo "download konstraint ${KONSTRAINT_VERSION}"
+  url="https://github.com/plexsystems/konstraint/releases/download/${KONSTRAINT_VERSION}/konstraint-linux-amd64"
+  curl -sfSL "$url" > "${KONSTRAINT}"
+  chmod +x "${KONSTRAINT}"
 fi
 
-"${konstraint}" "${@}"
+"${KONSTRAINT}" "${@}"
