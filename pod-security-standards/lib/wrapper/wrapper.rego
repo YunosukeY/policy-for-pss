@@ -2,7 +2,7 @@ package lib.wrapper
 
 import rego.v1
 
-default is_gatekeeper = false
+default is_gatekeeper := false
 
 is_gatekeeper if {
 	input.review.object
