@@ -2,7 +2,7 @@ package lib.restricted.privilege_escalation
 
 import data.lib.k8s
 import data.lib.wrapper
-import future.keywords
+import rego.v1
 
 violation_privilege_escalation contains msg if {
 	resource := wrapper.resource(input)

@@ -1,6 +1,6 @@
 package lib.baseline.host_port
 
-import future.keywords
+import rego.v1
 
 test_violation_host_port if {
 	pod := {

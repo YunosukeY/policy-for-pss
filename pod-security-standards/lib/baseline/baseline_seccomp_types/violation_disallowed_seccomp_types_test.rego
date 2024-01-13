@@ -1,6 +1,6 @@
 package lib.baseline.baseline_seccomp_types
 
-import future.keywords
+import rego.v1
 
 test_violation_disallowed_seccomp_types if {
 	pod := {

@@ -1,6 +1,6 @@
 package lib.baseline.host_path
 
-import future.keywords
+import rego.v1
 
 test_violation_host_path if {
 	pod := {

@@ -1,6 +1,6 @@
 package lib.restricted.privilege_escalation
 
-import future.keywords
+import rego.v1
 
 test_violation_privilege_escalation if {
 	pod := {

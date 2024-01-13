@@ -1,6 +1,6 @@
 package lib.baseline.sysctls
 
-import future.keywords
+import rego.v1
 
 test_violation_disallowed_sysctls if {
 	pod := {

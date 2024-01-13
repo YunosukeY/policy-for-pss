@@ -1,6 +1,6 @@
 package lib.baseline.privileged
 
-import future.keywords
+import rego.v1
 
 test_violation_privileged if {
 	pod := {

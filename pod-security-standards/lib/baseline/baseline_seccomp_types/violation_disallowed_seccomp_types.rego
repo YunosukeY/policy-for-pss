@@ -2,7 +2,7 @@ package lib.baseline.baseline_seccomp_types
 
 import data.lib.k8s
 import data.lib.wrapper
-import future.keywords
+import rego.v1
 
 allowed_seccomp_type := {
 	"RuntimeDefault",

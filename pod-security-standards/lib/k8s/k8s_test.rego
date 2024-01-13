@@ -1,6 +1,6 @@
 package lib.k8s
 
-import future.keywords
+import rego.v1
 
 test_is_pod if {
 	is_pod({"kind": "Pod"})

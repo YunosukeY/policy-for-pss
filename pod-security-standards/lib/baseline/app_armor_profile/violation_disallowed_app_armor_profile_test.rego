@@ -1,6 +1,6 @@
 package lib.baseline.app_armor_profile
 
-import future.keywords
+import rego.v1
 
 test_violation_disallowed_app_armor_profile if {
 	pod := {

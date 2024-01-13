@@ -1,6 +1,6 @@
 package lib.k8s
 
-import future.keywords
+import rego.v1
 
 workload_resources := {
 	"Deployment",

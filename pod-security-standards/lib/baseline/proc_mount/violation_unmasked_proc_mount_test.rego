@@ -1,6 +1,6 @@
 package lib.baseline.proc_mount
 
-import future.keywords
+import rego.v1
 
 test_violation_unmasked_proc_mount if {
 	pod := {

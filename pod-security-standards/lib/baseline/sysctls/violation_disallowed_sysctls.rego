@@ -2,7 +2,7 @@ package lib.baseline.sysctls
 
 import data.lib.k8s
 import data.lib.wrapper
-import future.keywords
+import rego.v1
 
 allowed_name := {
 	"kernel.shm_rmid_forced",

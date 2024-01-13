@@ -1,6 +1,6 @@
 package lib.restricted.volume_types
 
-import future.keywords
+import rego.v1
 
 test_violation_disallowed_volume_types if {
 	pod := {

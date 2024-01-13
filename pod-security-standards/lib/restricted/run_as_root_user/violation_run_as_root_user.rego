@@ -2,7 +2,7 @@ package lib.restricted.run_as_root_user
 
 import data.lib.k8s
 import data.lib.wrapper
-import future.keywords
+import rego.v1
 
 violation_run_as_root_user contains msg if {
 	resource := wrapper.resource(input)

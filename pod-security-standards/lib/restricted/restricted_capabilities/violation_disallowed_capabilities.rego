@@ -2,7 +2,7 @@ package lib.restricted.restricted_capabilities
 
 import data.lib.k8s
 import data.lib.wrapper
-import future.keywords
+import rego.v1
 
 violation_disallowed_capabilities contains msg if {
 	resource := wrapper.resource(input)

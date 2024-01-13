@@ -1,6 +1,6 @@
 package lib.baseline.selinux_options
 
-import future.keywords
+import rego.v1
 
 test_violation_disallowed_selinux_options if {
 	pod := {

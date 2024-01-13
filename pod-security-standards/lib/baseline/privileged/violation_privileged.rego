@@ -2,7 +2,7 @@ package lib.baseline.privileged
 
 import data.lib.k8s
 import data.lib.wrapper
-import future.keywords
+import rego.v1
 
 violation_privileged contains msg if {
 	resource := wrapper.resource(input)

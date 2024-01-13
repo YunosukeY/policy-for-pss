@@ -1,6 +1,6 @@
 package lib.baseline.host_namespaces
 
-import future.keywords
+import rego.v1
 
 test_violation_host_namespaces if {
 	pod := {

@@ -2,7 +2,7 @@ package lib.baseline.app_armor_profile
 
 import data.lib.k8s
 import data.lib.wrapper
-import future.keywords
+import rego.v1
 
 allowed_profile(profile) if {
 	profile == "runtime/default"

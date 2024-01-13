@@ -1,6 +1,6 @@
 package lib.restricted.run_as_root
 
-import future.keywords
+import rego.v1
 
 test_violation_run_as_root if {
 	pod := {

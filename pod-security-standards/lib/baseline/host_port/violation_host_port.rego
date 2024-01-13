@@ -2,7 +2,7 @@ package lib.baseline.host_port
 
 import data.lib.k8s
 import data.lib.wrapper
-import future.keywords
+import rego.v1
 
 violation_host_port contains msg if {
 	resource := wrapper.resource(input)

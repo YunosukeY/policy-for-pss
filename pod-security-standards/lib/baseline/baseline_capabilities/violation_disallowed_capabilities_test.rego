@@ -1,6 +1,6 @@
 package lib.baseline.baseline_capabilities
 
-import future.keywords
+import rego.v1
 
 test_violation_too_many_capabilities if {
 	pod := {

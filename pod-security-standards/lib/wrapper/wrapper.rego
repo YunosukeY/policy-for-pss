@@ -1,6 +1,6 @@
 package lib.wrapper
 
-import future.keywords
+import rego.v1
 
 default is_gatekeeper = false
 

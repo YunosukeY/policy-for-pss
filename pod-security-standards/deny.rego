@@ -17,7 +17,7 @@ import data.lib.restricted.restricted_seccomp_types
 import data.lib.restricted.run_as_root
 import data.lib.restricted.run_as_root_user
 import data.lib.restricted.volume_types
-import future.keywords
+import rego.v1
 
 # Baseline
 
