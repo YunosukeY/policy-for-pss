@@ -3,49 +3,49 @@ package lib.wrapper
 import rego.v1
 
 test_is_gatekeeper if {
-	input := {
+	test_input := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 	}
-	not is_gatekeeper with input as input
+	not is_gatekeeper with input as test_input
 }
 
 test_is_gatekeeper if {
-	input := {"review": {"object": {
+	test_input := {"review": {"object": {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 	}}}
-	is_gatekeeper with input as input
+	is_gatekeeper with input as test_input
 }
 
 test_resource if {
-	input := {
+	test_input := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 	}
-	resource(input) == input with input as input
+	resource(input) == input with input as test_input
 }
 
 test_resource if {
-	input := {"review": {"object": {
+	test_input := {"review": {"object": {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 	}}}
-	resource(input) == input.review.object with input as input
+	resource(input) == input.review.object with input as test_input
 }
 
 test_format if {
-	input := {
+	test_input := {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 	}
-	format("test: %s", ["value"]) == "test: value" with input as input
+	format("test: %s", ["value"]) == "test: value" with input as test_input
 }
 
 test_format if {
-	input := {"review": {"object": {
+	test_input := {"review": {"object": {
 		"kind": "Pod",
 		"metadata": {"name": "myapp-pod"},
 	}}}
-	format("test: %s", ["value"]) == {"msg": "test: value"} with input as input
+	format("test: %s", ["value"]) == {"msg": "test: value"} with input as test_input
 }
