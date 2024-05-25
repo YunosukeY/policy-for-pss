@@ -3,7 +3,7 @@
 set -eu
 
 # renovate: datasource=github-releases depName=open-policy-agent/gatekeeper versioning=loose
-readonly GATEKEEPER_VERSION="v3.16.2"
+readonly GATEKEEPER_VERSION="v3.16.3"
 readonly REPO_DIR="$(git rev-parse --show-toplevel)"
 readonly BIN="${REPO_DIR}/BIN"
 readonly GATOR="${BIN}/gator"
