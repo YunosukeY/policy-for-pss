@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
       - uses: aquaproj/aqua-installer@v3.0.1
         with:
-          aqua_version: v2.28.1
+          aqua_version: v2.29.0
       - run: echo "COVERAGE=$(opa test pod-security-standards -c | jq .coverage)" >> $GITHUB_ENV
       - uses: schneegans/dynamic-badges-action@v1.7.0
         with:
