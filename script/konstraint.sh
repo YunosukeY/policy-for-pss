@@ -3,7 +3,7 @@
 set -eu
 
 # renovate: datasource=github-releases depName=plexsystems/konstraint versioning=loose
-readonly KONSTRAINT_VERSION="v0.36.0"
+readonly KONSTRAINT_VERSION="v0.37.0"
 readonly REPO_DIR="$(git rev-parse --show-toplevel)"
 readonly BIN="${REPO_DIR}/bin"
 readonly KONSTRAINT="${BIN}/konstraint"
