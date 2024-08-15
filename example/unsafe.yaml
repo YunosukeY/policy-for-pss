@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: nginx:1.7.7
+          image: nginx:1.27.1
