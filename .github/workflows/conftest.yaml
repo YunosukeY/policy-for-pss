@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
       - uses: aquaproj/aqua-installer@v4.0.3
         with:
-          aqua_version: v2.55.0
+          aqua_version: v2.55.1
       - run: |
           conftest test example/safe.yaml -p pod-security-standards
           ! conftest test example/unsafe.yaml -p pod-security-standards # should fail
