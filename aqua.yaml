@@ -13,5 +13,5 @@ packages:
 - name: open-policy-agent/conftest@v0.59.0
 - name: kubernetes-sigs/kind@v0.30.0
 - name: helm/helm@v3.19.0
-- name: helmfile/helmfile@v1.1.7
+- name: helmfile/helmfile@v1.1.8
 - name: kubernetes/kubectl@v1.34.1
