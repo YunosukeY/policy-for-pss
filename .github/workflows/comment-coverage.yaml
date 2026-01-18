@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       - uses: aquaproj/aqua-installer@v4.0.4
         with:
-          aqua_version: v2.56.3
+          aqua_version: v2.56.4
       - run: opa test pod-security-standards -c > result.json
       - run: |
           echo "coverage: $(cat result.json | jq .coverage)%" >> comment
