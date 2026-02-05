@@ -18,7 +18,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: nginx
-          image: nginx:1.29.4
+          image: nginx:1.29.5
           securityContext:
             runAsNonRoot: true
             allowPrivilegeEscalation: false
